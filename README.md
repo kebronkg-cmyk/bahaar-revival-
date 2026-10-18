@@ -7,7 +7,7 @@ Designsprache: **Liquid Glass** mit weichem Türkis als Leitfarbe, echte Haar-Er
 
 | Datei | Inhalt |
 | --- | --- |
-| `index.html` | Startseite: Liquid-Glass-Hero (WebGL), Leistungen, Über Bahar, Preis-Ausschnitt, Brautstyling, Galerie mit Lightbox, fließende Bewertungen, Kontakt mit Live-Öffnungsstatus |
+| `index.html` | Startseite: rahmenloser Liquid-Glass-Hero (WebGL) mit einem echten Haar-Ergebnis, das sich in den türkisen Raum auflöst, Leistungen, Über Bahar, Preis-Ausschnitt, Brautstyling, Galerie mit Lightbox, fließende Bewertungen, Kontakt mit Live-Öffnungsstatus |
 | `preise.html` | Komplette Preisliste (32 Leistungen) mit Suche (umlaut- & tippfehlertolerant), Kategorie-Navigation, Haarlängen-Schalter und Termin-Planer |
 | `impressum.html`, `datenschutz.html` | Rechtliches (bitte vor Livegang prüfen lassen) |
 | `404.html` | Fehlerseite |
@@ -25,7 +25,7 @@ Statische Website ohne Build-Schritt – einfach alle Dateien auf den Webspace l
 
 - Reines HTML/CSS/JavaScript, keine Abhängigkeiten, keine Cookies, kein Tracking.
 - Schriften (Instrument Serif, Plus Jakarta Sans) lokal eingebunden – DSGVO-freundlich, keine Google-Fonts-Verbindung.
-- Hero: WebGL2-Shader mit flüssigen Glastropfen (Brechung, chromatische Aberration, Verschmelzen per Smooth-Min), folgt Maus/Touch, passt die Auflösung bei schwachen Geräten automatisch an und pausiert außerhalb des Sichtbereichs. Ohne WebGL2 erscheint eine identisch komponierte CSS-Version.
+- Hero: Das Studiofoto ist freigestellt (Person scharf, Salon dahinter weich und türkis getönt, Ränder transparent) – ohne Rahmen. WebGL2-Shader mit flüssigen Glastropfen (Brechung, chromatische Aberration, Verschmelzen per Smooth-Min), folgt Maus/Touch, passt die Auflösung bei schwachen Geräten automatisch an und pausiert außerhalb des Sichtbereichs. Ohne WebGL2 erscheint eine identisch komponierte CSS-Version.
 - Online-Buchung über Salonized im Glas-Dialog (wird erst beim Klick geladen), OpenStreetMap-Karte erst nach Klick.
 - `prefers-reduced-motion` wird respektiert; Tastatur-Bedienung, Fokus-Stile und ARIA-Rollen für Tabs, Radiogruppen und Dialoge.
 - `.htaccess` leitet die alten Adressen (`/preise`, `/galerie`, `/impressum`, `/datenschutzerklarung`) weiter und aktiviert Kompression & Caching.

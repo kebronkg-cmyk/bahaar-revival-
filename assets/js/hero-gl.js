@@ -1,7 +1,7 @@
 /* BaHaar's Styling Studio – Liquid-Glass-Hero (WebGL2)
-   Echte Haar-Ergebnisse aus dem Studio in Glasrahmen, eine Orchideenblüte als Akzent,
-   ein türkiser Perlmutt-Raum dahinter. Flüssige Glastropfen brechen das Bild,
-   verschmelzen miteinander und folgen dem Zeiger.
+   Ein echtes Haar-Ergebnis aus dem Studio löst sich ohne Rahmen in einen türkisen
+   Perlmutt-Raum auf, eine Orchideenblüte setzt den Akzent. Flüssige Glastropfen
+   brechen das Bild, verschmelzen miteinander und folgen dem Zeiger.
    Ohne WebGL2 bleibt die identisch komponierte HTML/CSS-Ebene sichtbar. */
 (() => {
   'use strict';
@@ -31,7 +31,7 @@
   uniform vec4 uParam[3];
   uniform vec2 uShift[3];
   uniform vec2 uPad[3];
-  uniform vec4 uShape[3];   // Typ (0 Freisteller, 1 Bogen, 2 Rechteck), Radius oben, Radius unten, Rahmenbreite
+  uniform vec4 uShape[3];   // Typ (0 Freisteller, 1 Bogen, 2 Rechteck); Freisteller: y = Schattenstärke; Rahmen: Radius oben/unten, Rahmenbreite
   uniform vec4 uCover[3];   // Bild-Seitenverhältnis, object-position x/y
   uniform sampler2D uTex0;
   uniform sampler2D uTex1;
@@ -136,7 +136,7 @@
     vec2 uv = spriteUV(i, p);
     vec2 suv = spriteUV(i, p - vec2(14.0, 28.0));
     float sh = texture(tex, suv, min(3.4 + uParam[i].y * 0.5, 4.4)).a * inBox(suv);
-    col *= 1.0 - 0.16 * sh;
+    col *= 1.0 - 0.16 * sh * shp.y;
     vec4 s = texture(tex, uv, uParam[i].y) * inBox(uv);
     return s.rgb + col * (1.0 - s.a);
   }
@@ -248,6 +248,9 @@
     img: el.tagName === 'IMG' ? el : el.querySelector('img'),
     blur: parseFloat(el.dataset.blur) || 0,
     shape: { cutout: 0, arch: 1, rect: 2 }[el.dataset.shape || 'cutout'],
+    shadow: el.dataset.shadow !== undefined ? parseFloat(el.dataset.shadow) : 1,
+    sway: el.dataset.sway !== undefined ? parseFloat(el.dataset.sway) : null,
+    depth: el.dataset.depth !== undefined ? parseFloat(el.dataset.depth) : null,
   }));
   const anchor = sprites.find((s) => 'anchor' in s.el.dataset) || sprites[0];
 
@@ -312,8 +315,9 @@
       const w = el.offsetWidth, h = el.offsetHeight;
       rects.set([el.offsetLeft, el.offsetTop, w, h], i * 4);
       const bias = s.blur > 0 ? Math.log2(1 + s.blur * dpr) : 0;
-      const sway = s.shape === 0 ? 0.05 : 0.004;
+      const sway = s.sway ?? (s.shape === 0 ? 0.05 : 0.004);
       params.set([rot * Math.PI / 180, bias, sway, i * 1.7], i * 4);
+      if (s.shape === 0) shapes.set([0, s.shadow, 0, 0], i * 4);
       if (s.shape > 0) {
         const frame = parseFloat(cs.paddingTop) || 0;
         const rb = parseFloat(cs.borderBottomLeftRadius) || 0;
@@ -327,14 +331,15 @@
   }
 
   /* -------------------- Glastropfen-Choreografie ------------------- */
+  // Positionen relativ zum Anker-Bild (Haar liegt etwa bei x 0.25–0.75, y 0.15–0.85)
   const DROPS = [
-    { fx: 0.02, fy: 0.30, r: 0.17, amp: 14, sp: 0.21, ph: 0.0 },
-    { fx: 0.96, fy: 0.55, r: 0.12, amp: 12, sp: 0.17, ph: 1.3 },
-    { fx: 0.58, fy: 0.80, r: 0.10, amp: 14, sp: 0.13, ph: 2.1 },
-    { fx: 0.30, fy: 0.10, r: 0.07, amp: 10, sp: 0.25, ph: 3.4 },
-    { fx: -0.62, fy: 0.98, r: 0.08, amp: 10, sp: 0.30, ph: 4.2 },
-    { fx: 1.06, fy: 0.08, r: 0.05, amp: 8, sp: 0.33, ph: 5.0 },
-    { fx: -0.42, fy: 0.16, r: 0.05, amp: 8, sp: 0.28, ph: 0.7 },
+    { fx: 0.30, fy: 0.36, r: 0.13, amp: 14, sp: 0.21, ph: 0.0 },
+    { fx: 0.80, fy: 0.27, r: 0.08, amp: 12, sp: 0.17, ph: 1.3 },
+    { fx: 0.62, fy: 0.70, r: 0.10, amp: 14, sp: 0.13, ph: 2.1 },
+    { fx: 0.16, fy: 0.68, r: 0.06, amp: 10, sp: 0.25, ph: 3.4 },
+    { fx: 0.88, fy: 0.58, r: 0.045, amp: 9, sp: 0.30, ph: 4.2 },
+    { fx: 0.46, fy: 0.11, r: 0.045, amp: 9, sp: 0.33, ph: 5.0 },
+    { fx: 0.06, fy: 0.30, r: 0.035, amp: 8, sp: 0.28, ph: 0.7 },
   ];
   const drops = new Float32Array(32);
   const pointer = { x: 0, y: 0, tx: 0, ty: 0, r: 0, tr: 0, vx: 0, vy: 0, inside: false };
@@ -360,7 +365,7 @@
     pointer.ty = e.clientY - r.top;
     if (!pointer.inside && active) { pointer.x = pointer.tx; pointer.y = pointer.ty; }
     pointer.inside = active;
-    pointer.tr = active ? Math.max(46, anchorBox.w * (isTouch ? 0.2 : 0.15)) : 0;
+    pointer.tr = active ? Math.max(46, anchorBox.w * (isTouch ? 0.16 : 0.12)) : 0;
     look.tx = (pointer.tx / W - 0.5);
     look.ty = (pointer.ty / H - 0.5);
   }
@@ -378,7 +383,7 @@
   function draw(t) {
     updateDrops(t);
     sprites.forEach((s, i) => {
-      const depth = s.shape === 0 ? 26 : 8 + i * 6;
+      const depth = s.depth ?? (s.shape === 0 ? 26 : 8 + i * 6);
       shifts.set([-look.x * depth, -look.y * depth * 0.6], i * 2);
     });
     gl.uniform2f(U.uRes, W, H);

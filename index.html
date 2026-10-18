@@ -21,7 +21,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" type="image/webp" href="assets/img/gallery/look-09-l.webp" imagesrcset="assets/img/gallery/look-09-s.webp 560w, assets/img/gallery/look-09-l.webp 1200w" imagesizes="(max-width: 899px) 72vw, 520px">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/hero/portrait-1200.webp" imagesrcset="assets/img/hero/portrait-720.webp 720w, assets/img/hero/portrait-1200.webp 1200w" imagesizes="(max-width: 899px) 100vw, 52vw">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/home.css">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
@@ -115,18 +115,12 @@
       <div class="hero__stage" aria-hidden="true" data-hero-stage>
         <div class="hero__aurora"></div>
         <div class="hero__ribbon"></div>
-        <img class="hero__bloom" data-sprite="blossom" data-shape="cutout" data-blur="0.4"
+        <img class="hero__portrait" data-sprite="portrait" data-shape="cutout" data-shadow="0" data-sway="0" data-depth="10" data-anchor
+             src="assets/img/hero/portrait-1200.webp"
+             srcset="assets/img/hero/portrait-720.webp 720w, assets/img/hero/portrait-1200.webp 1200w"
+             sizes="(max-width: 899px) 100vw, 52vw" width="1200" height="1600" alt="" fetchpriority="high">
+        <img class="hero__bloom" data-sprite="blossom" data-shape="cutout" data-blur="1.2" data-depth="30"
              src="assets/img/orchid/blossom-480.webp" width="480" height="437" alt="">
-        <figure class="hero__frame hero__frame--arch" data-sprite="photo" data-shape="arch" data-anchor>
-          <img src="assets/img/gallery/look-09-l.webp"
-               srcset="assets/img/gallery/look-09-s.webp 560w, assets/img/gallery/look-09-l.webp 1200w"
-               sizes="(max-width: 899px) 72vw, 520px" width="1200" height="1600" alt="" fetchpriority="high">
-        </figure>
-        <figure class="hero__frame hero__frame--card" data-sprite="photo" data-shape="rect">
-          <img src="assets/img/gallery/look-03-l.webp"
-               srcset="assets/img/gallery/look-03-s.webp 560w, assets/img/gallery/look-03-l.webp 1200w"
-               sizes="(max-width: 899px) 56vw, 340px" width="1200" height="797" alt="">
-        </figure>
         <span class="orb orb--clear hero__drop hero__drop--1"></span>
         <span class="orb orb--clear hero__drop hero__drop--2"></span>
         <span class="orb orb--clear hero__drop hero__drop--3"></span>
