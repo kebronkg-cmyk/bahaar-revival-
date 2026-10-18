@@ -1,0 +1,38 @@
+# BaHaar's Styling Studio – Apache-Konfiguration (z. B. IONOS-Webhosting)
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Alte Adressen der bisherigen Website weiterleiten
+  RewriteRule ^preise/?$ /preise.html [L,R=301]
+  RewriteRule ^galerie/?$ /#galerie [L,R=301,NE]
+  RewriteRule ^impressum/?$ /impressum.html [L,R=301]
+  RewriteRule ^datenschutzerklarung/?$ /datenschutz.html [L,R=301]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/manifest+json application/xml text/plain
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+AddType application/manifest+json .webmanifest
+AddType font/woff2 .woff2
