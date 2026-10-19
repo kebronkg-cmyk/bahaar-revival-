@@ -51,6 +51,19 @@
   --badge-a: #ab96ff;
   --badge-b: #5b3fe0;
 
+  /* Zweite Leitfarbe: weiches Türkis (wie das Studio selbst) */
+  --tq-50: #effcfb;
+  --tq-100: #d9f6f2;
+  --tq-200: #b4ece6;
+  --tq-300: #86ddd5;
+  --tq-400: #55c8bf;
+  --tq-500: #2fb2a9;
+  --tq-600: #1f948d;
+  --tq-700: #187670;
+  --tq-ink: #13665f;
+  --badge-tq-a: #8ee6dc;
+  --badge-tq-b: #1f9790;
+
   /* Begleiter: Orchideenblau, Perle, ein Hauch Rosé und Mint */
   --orchid-300: #a9c4ff;
   --orchid-400: #7da2f2;
@@ -81,7 +94,7 @@
     0 0 0 1px rgba(255, 255, 255, 0.45) inset,
     0 40px 90px -36px rgba(40, 30, 120, 0.42),
     0 10px 30px -14px rgba(40, 30, 120, 0.2);
-  --iris: linear-gradient(120deg, #ffffff 0%, #d7cdff 22%, #f6c9ea 44%, #c7e6ff 66%, #ffffff 88%);
+  --iris: linear-gradient(120deg, #ffffff 0%, #d7cdff 22%, #bdeee8 44%, #f6c9ea 66%, #ffffff 88%);
 
   /* Typografie */
   --font-display: "Instrument Serif", "Iowan Old Style", "Times New Roman", serif;
@@ -185,9 +198,10 @@ dialog { padding: 0; border: 0; color: inherit; }
   pointer-events: none;
   background:
     radial-gradient(60vmax 50vmax at 8% 12%, rgba(178, 160, 255, 0.85), transparent 60%),
-    radial-gradient(55vmax 45vmax at 92% 8%, rgba(208, 228, 252, 0.8), transparent 62%),
+    radial-gradient(55vmax 45vmax at 92% 8%, rgba(182, 238, 231, 0.75), transparent 62%),
     radial-gradient(50vmax 50vmax at 85% 88%, rgba(236, 232, 255, 0.75), transparent 60%),
-    radial-gradient(60vmax 45vmax at 12% 92%, rgba(250, 228, 237, 0.55), transparent 60%),
+    radial-gradient(60vmax 45vmax at 12% 92%, rgba(196, 240, 233, 0.6), transparent 60%),
+    radial-gradient(40vmax 30vmax at 60% 55%, rgba(250, 228, 237, 0.4), transparent 60%),
     linear-gradient(180deg, #f3f0ff 0%, #efeaff 50%, #f4effd 100%);
 }
 .atmosphere::before,
@@ -250,7 +264,7 @@ dialog { padding: 0; border: 0; color: inherit; }
 .display em,
 .h2 em,
 .h3 em {
-  --em-grad: linear-gradient(100deg, #6a4ff0 0%, #8a63f2 42%, var(--orchid-500) 100%);
+  --em-grad: linear-gradient(100deg, #6a4ff0 0%, #7f62f1 34%, #4f7fdc 68%, #1a8f8a 100%);
   font-style: italic;
   background: var(--em-grad);
   -webkit-background-clip: text;
@@ -302,7 +316,7 @@ em.is-split .split-word {
   width: 28px; height: 2px;
   flex: none;
   border-radius: 2px;
-  background: linear-gradient(90deg, transparent, var(--ac-500));
+  background: linear-gradient(90deg, transparent, var(--tq-400) 55%, var(--ac-500));
 }
 .eyebrow::after {
   content: "";
@@ -353,8 +367,8 @@ em.is-split .split-word {
   background: linear-gradient(150deg,
     rgba(255, 255, 255, 0.95) 0%,
     rgba(255, 255, 255, 0.2) 30%,
-    rgba(236, 232, 255, 0.55) 55%,
-    rgba(255, 214, 240, 0.45) 75%,
+    rgba(190, 238, 232, 0.6) 55%,
+    rgba(255, 214, 240, 0.45) 78%,
     rgba(255, 255, 255, 0.9) 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -380,7 +394,7 @@ em.is-split .split-word {
 .glass--tint {
   background:
     linear-gradient(150deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.18)),
-    linear-gradient(135deg, rgba(178, 160, 255, 0.55), rgba(255, 200, 236, 0.45) 55%, rgba(190, 228, 255, 0.5));
+    linear-gradient(135deg, rgba(178, 160, 255, 0.55), rgba(255, 200, 236, 0.42) 50%, rgba(160, 232, 222, 0.55));
 }
 .glass--dark {
   background: linear-gradient(150deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
@@ -402,7 +416,7 @@ em.is-split .split-word {
   pointer-events: none;
   background:
     radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95) 0 6%, rgba(255, 255, 255, 0) 22%),
-    radial-gradient(circle at 70% 78%, rgba(255, 255, 255, 0.55), transparent 38%),
+    radial-gradient(circle at 70% 78%, rgba(160, 238, 228, 0.7), transparent 38%),
     radial-gradient(circle at 50% 50%, rgba(178, 160, 255, 0.35), rgba(106, 79, 240, 0.55) 70%, rgba(106, 79, 240, 0.75));
   box-shadow:
     inset -8px -12px 24px rgba(106, 79, 240, 0.35),
@@ -412,7 +426,7 @@ em.is-split .split-word {
 .orb--clear {
   background:
     radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.95) 0 5%, rgba(255, 255, 255, 0) 20%),
-    radial-gradient(circle at 68% 76%, rgba(255, 255, 255, 0.7), transparent 34%),
+    radial-gradient(circle at 68% 76%, rgba(190, 242, 234, 0.75), transparent 34%),
     radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), rgba(236, 232, 255, 0.28) 72%, rgba(255, 255, 255, 0.6));
   -webkit-backdrop-filter: blur(3px) saturate(160%);
   backdrop-filter: blur(3px) saturate(160%);
@@ -501,7 +515,7 @@ em.is-split .split-word {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     inset 0 0 0 1px rgba(255, 255, 255, 0.55),
-    inset 0 -8px 16px rgba(178, 160, 255, 0.12),
+    inset 0 -8px 16px rgba(120, 220, 210, 0.14),
     0 12px 28px -14px rgba(40, 30, 120, 0.35);
 }
 .btn--glass:hover { background: linear-gradient(150deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.6)); }
@@ -549,7 +563,7 @@ em.is-split .split-word {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
     inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-    inset 0 -6px 12px rgba(178, 160, 255, 0.14),
+    inset 0 -6px 12px rgba(120, 220, 210, 0.16),
     0 10px 22px -12px rgba(40, 30, 120, 0.4);
   transition: transform 0.45s var(--ease-spring), box-shadow 0.3s;
   -webkit-tap-highlight-color: transparent;
@@ -575,25 +589,9 @@ em.is-split .split-word {
 }
 .chip svg { width: 16px; height: 16px; flex: none; }
 
-.status-dot {
-  position: relative;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: #3fcf8e;
-  box-shadow: 0 0 0 3px rgba(63, 207, 142, 0.18);
-  flex: none;
-}
-.status-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  animation: ping 2.2s var(--ease-out) infinite;
-}
-.is-closed .status-dot { background: #f08a6b; box-shadow: 0 0 0 3px rgba(240, 138, 107, 0.18); }
-.is-soon .status-dot { background: #f2b649; box-shadow: 0 0 0 3px rgba(242, 182, 73, 0.2); }
-@keyframes ping { 70%, 100% { transform: scale(2.6); opacity: 0; } }
+/* Öffnungsstatus: ruhige Uhr in Türkis, geöffnet = türkiser Text */
+[data-open-status] > svg { width: 16px; height: 16px; flex: none; color: var(--tq-600); }
+[data-open-status]:not(.is-closed):not(.is-soon) [data-open-text] { color: var(--tq-ink); }
 
 .stars {
   display: inline-flex;
@@ -1035,6 +1033,7 @@ body.menu-open { overflow: hidden; }
   text-shadow:
     0 0 6px rgba(255, 255, 255, 0.55),
     0 0 22px rgba(178, 160, 255, 0.6),
+    0 0 46px rgba(120, 224, 214, 0.32),
     0 0 60px rgba(106, 79, 240, 0.5),
     0 0 120px rgba(106, 79, 240, 0.35);
 }

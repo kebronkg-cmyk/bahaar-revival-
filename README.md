@@ -1,7 +1,7 @@
 # BaHaar’s Styling Studio · Website
 
 Neue Website für **BaHaar’s Styling Studio**, Friseurmeisterin Bahar in Giesing, München.
-Designsprache: **Liquid Glass** in Lavendel und Violett, echte Haarergebnisse aus dem Studio im Mittelpunkt, echte blaue Orchideen als Begleiter. Im Hero schaut eine Schere aus einem Orchideenbusch heraus.
+Designsprache: **Liquid Glass** in Lavendel und Violett mit weichem Türkis als zweiter Leitfarbe (wie das Studio selbst), echte Haarergebnisse aus dem Studio im Mittelpunkt, echte blaue Orchideen als Begleiter, die immer an Kanten und Ecken verankert sind und nie Inhalte verdecken. Im Hero schaut eine Schere aus einem Orchideenbusch heraus.
 
 ## Seiten
 
@@ -38,6 +38,7 @@ Statische Website ohne Buildschritt. Einfach alle Dateien auf den Webspace laden
 - Schere im Hero: Vorlage von Pinterest, **Bildrechte vor dem Livegang klären** (oder durch ein eigenes Foto ersetzen)
 - Orchideenblüte: Jan Dommerholt (Unsplash-Lizenz)
 - Orchideenzweig: Marko Bugarski (Unsplash-Lizenz)
+- Weitere Orchideen (Rispe, Einzelblüte, Zweig, Strauß): aus der blauen Fassung übernommen, Herkunft vor dem Livegang prüfen
 - Schriften: SIL Open Font License (siehe `assets/fonts/`)
 
 ## Lokal ansehen

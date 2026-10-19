@@ -60,7 +60,8 @@
     col = mix(col, vec3(0.775, 0.810, 1.0), 0.75 * blob(a, vec2(asp * (0.76 + 0.04 * sin(t * 0.11)), 0.42 + 0.05 * cos(t * 0.09)), 0.6));
     col = mix(col, vec3(0.976, 0.830, 0.930), 0.6 * blob(a, vec2(asp * (0.06 + 0.05 * cos(t * 0.07)), 0.92 + 0.04 * sin(t * 0.10)), 0.5));
     col = mix(col, vec3(0.870, 0.810, 1.0), 0.6 * blob(a, vec2(asp * (0.30 + 0.06 * sin(t * 0.06)), 0.10), 0.48));
-    col = mix(col, vec3(0.830, 0.915, 1.0), 0.5 * blob(a, vec2(asp * (0.62 + 0.05 * cos(t * 0.08)), 0.98), 0.42));
+    col = mix(col, vec3(0.720, 0.935, 0.910), 0.6 * blob(a, vec2(asp * (0.62 + 0.05 * cos(t * 0.08)), 0.98), 0.42));
+    col = mix(col, vec3(0.760, 0.945, 0.925), 0.55 * blob(a, vec2(asp * (0.98 + 0.03 * sin(t * 0.07)), 0.08), 0.36));
     return col;
   }
 
@@ -79,7 +80,7 @@
     float side = tw < 0.0 ? -1.0 : 1.0;
     float h = d * 0.35 * side + x * 0.16 + t * 0.015 + ph;
     vec3 film = 0.5 + 0.5 * cos(6.28318 * (h + vec3(0.0, 0.2, 0.4)));
-    film = mix(vec3(0.86, 0.82, 1.0), film, 0.34);
+    film = mix(mix(vec3(0.86, 0.82, 1.0), vec3(0.78, 0.95, 0.93), 0.5 + 0.5 * sin(x * 2.2 + ph)), film, 0.34);
     vec3 c = mix(vec3(0.96, 0.95, 1.0), film, 0.5 + 0.4 * fres);
     float hl = pow(max(0.0, 1.0 - abs(d * side + 0.45) * 2.4), 4.0);
     c += vec3(1.0) * hl * 0.5;

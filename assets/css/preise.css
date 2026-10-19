@@ -26,16 +26,20 @@ html.header-hidden { --toolbar-top: 12px; }
   gap: 8px;
   margin-top: 26px;
 }
-.price-hero__chips svg { color: var(--accent-ink); }
-@media (max-width: 979px) { .price-hero__bloom { display: none; } }
-.price-hero__bloom {
-  top: 18%;
-  right: -70px;
+.price-hero__chips svg { color: var(--tq-600); }
+/* der Orchideenzweig wächst hinter der oberen rechten Ecke der Anleitung hervor */
+.how-wrap { position: relative; }
+.how__bloom {
+  top: -92px;
+  right: -46px;
   width: 210px;
-  rotate: -22deg;
-  opacity: 0.9;
+  rotate: 10deg;
 }
-.how { padding: 26px 26px 22px; }
+.how { position: relative; z-index: 1; padding: 26px 26px 22px; }
+@media (max-width: 979px) {
+  .how-wrap { margin-top: 56px; }
+  .how__bloom { top: -74px; right: -22px; width: 168px; }
+}
 .how__title {
   margin-bottom: 16px;
   font-family: var(--font-display);
@@ -331,9 +335,9 @@ html.header-hidden { --toolbar-top: 12px; }
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--accent-ink);
-  background: rgba(255, 255, 255, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(106, 79, 240, 0.2);
+  color: var(--tq-ink);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(217, 246, 242, 0.7));
+  box-shadow: inset 0 0 0 1px rgba(31, 148, 141, 0.22);
   white-space: nowrap;
 }
 .cat__count::after { content: " Leistungen"; }
@@ -399,7 +403,7 @@ body[data-length="long"] .cat__cols span:last-child { color: var(--accent-ink); 
   color: var(--ink-3);
 }
 .svc__dur { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; color: var(--ink-2); }
-.svc__dur svg { width: 14px; height: 14px; color: var(--ac-600); }
+.svc__dur svg { width: 14px; height: 14px; color: var(--tq-600); }
 
 .svc__prices {
   display: flex;

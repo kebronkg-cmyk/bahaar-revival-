@@ -101,7 +101,7 @@
       </a>
       <a class="btn btn--glass btn--lg" href="tel:+49896923644"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-phone"/></svg> 089 692 36 44</a>
       <div class="menu__meta">
-        <span class="chip" data-open-status><span class="status-dot"></span><span data-open-text>Öffnungszeiten</span></span>
+        <span class="chip chip--status" data-open-status><svg aria-hidden="true"><use href="assets/img/icons.svg#i-clock"/></svg><span data-open-text>Öffnungszeiten</span></span>
         <span class="chip"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-pin"/></svg>Perlacher Str. 2, München</span>
       </div>
     </div>
@@ -138,11 +138,14 @@
         <span class="hero__tag hero__tag--b"><span class="hero__tag-icon"><svg><use href="assets/img/icons.svg#i-scissors"/></svg></span>Schnitt · Farbe · Styling</span>
       </div>
 
+      <!-- nur Handy: eine Blüte legt sich über die Kante der Glaskarte -->
+      <img class="hero__front" src="assets/img/orchid/bluete-408.webp" width="408" height="486" alt="" aria-hidden="true">
+
       <div class="container hero__content">
         <div class="hero__card">
           <div class="hero__meta" data-reveal style="--d:.1s">
             <span class="chip"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-scissors"/></svg>Dein Friseur in Giesing</span>
-            <span class="chip" data-open-status><span class="status-dot"></span><span data-open-text>Öffnungszeiten</span></span>
+            <span class="chip chip--status" data-open-status><svg aria-hidden="true"><use href="assets/img/icons.svg#i-clock"/></svg><span data-open-text>Öffnungszeiten</span></span>
           </div>
           <h1 class="display hero__title" id="hero-title" data-split>
             Dein Haar in <em>guten Händen</em>.
@@ -204,9 +207,9 @@
         <div class="bento">
           <a class="card card--feature glass glass--lg" href="preise.html#farbe" data-reveal data-tilt>
             <picture class="card__photo">
-              <img src="assets/img/arbeiten/balayage-s.webp" srcset="assets/img/arbeiten/balayage-s.webp 560w, assets/img/arbeiten/balayage-l.webp 1000w" sizes="(max-width: 700px) 92vw, 46vw" width="560" height="746" alt="Lange Haare mit natürlicher Balayage, gestaltet im Studio" loading="lazy">
+              <img src="assets/img/arbeiten/braut-perlen-s.webp" srcset="assets/img/arbeiten/braut-perlen-s.webp 560w, assets/img/arbeiten/braut-perlen-l.webp 899w" sizes="(max-width: 639px) 92vw, (max-width: 1079px) 46vw, 300px" width="560" height="1090" alt="Blonde Locken mit zarter Perlenranke, gestaltet im Studio" loading="lazy">
             </picture>
-            <span class="card__body glass glass--strong">
+            <span class="card__body">
               <span class="card__top">
                 <span class="card__icon"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-drop"/></svg></span>
                 <span class="card__price">ab 43&nbsp;€</span>
@@ -293,10 +296,10 @@
     <section class="section about" id="bahar" aria-labelledby="about-title">
       <div class="container about__grid">
         <figure class="about__figure" data-reveal="scale">
+          <img class="bloom about__sprig" src="assets/img/orchid/rispe-520.webp" width="520" height="870" alt="" loading="lazy">
           <div class="about__arch glass glass--lg">
             <img src="assets/img/studio/bahar-624.webp" width="624" height="1024" alt="Friseurmeisterin Bahar in ihrem Studio in Giesing" loading="lazy">
           </div>
-          <span class="orb about__orb" aria-hidden="true"></span>
           <figcaption class="about__badge glass glass--strong">
             <span class="about__badge-num">20</span>
             <span>Jahre<br>Meisterhandwerk</span>
@@ -351,6 +354,7 @@
         </header>
 
         <div class="studio__grid">
+          <img class="bloom studio__bloom" src="assets/img/orchid/bluete-408.webp" width="408" height="486" alt="" loading="lazy">
           <figure class="studio__shot studio__shot--main glass glass--lg" data-reveal="scale" data-studio-shot>
             <div class="studio__frame">
               <img src="assets/img/studio/laden-raum.webp" width="1170" height="548" alt="Blick in den Salon mit dem Pflegeregal und den Frisierplätzen" loading="lazy">
@@ -396,7 +400,6 @@
 
         <div class="prices__stage" data-reveal="scale" style="--d:.1s">
           <img class="prices__bloom" src="assets/img/orchid/stem-760.webp" srcset="assets/img/orchid/stem-760.webp 760w, assets/img/orchid/stem-1400.webp 1400w" sizes="(max-width: 900px) 110vw, 760px" width="760" height="576" alt="" loading="lazy" data-parallax="-0.06">
-          <span class="orb orb--clear prices__orb" aria-hidden="true"></span>
           <div class="price-panel glass glass--lg" data-price-panel>
             <div class="price-panel__head">
               <div class="segmented" role="tablist" aria-label="Kategorie wählen" data-segmented>
@@ -479,17 +482,19 @@
               <a class="btn btn--glass" href="mailto:info@bahaarsstylingstudio.de?subject=Anfrage%20Brautstyling"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-mail"/></svg>E-Mail schreiben</a>
             </div>
           </div>
-          <div class="bridal__visual" aria-hidden="false">
-            <img class="bloom bloom--front bridal__stem" src="assets/img/orchid/stem-760.webp" srcset="assets/img/orchid/stem-760.webp 760w, assets/img/orchid/stem-1400.webp 1400w" sizes="(max-width: 900px) 80vw, 560px" width="760" height="576" alt="" loading="lazy" data-parallax="0.1">
-            <figure class="polaroid polaroid--1 glass glass--strong" data-reveal="right" style="--d:.1s">
-              <img src="assets/img/arbeiten/braut-schleier-s.webp" width="550" height="977" alt="Braut mit Schleier und kunstvoller Hochsteckfrisur" loading="lazy">
-            </figure>
-            <figure class="polaroid polaroid--2 glass glass--strong" data-reveal="right" style="--d:.2s">
-              <img src="assets/img/gallery/look-01-s.webp" width="560" height="747" alt="Brautfrisur mit Blütenschmuck und Perlen" loading="lazy">
-            </figure>
-            <figure class="polaroid polaroid--3 glass glass--strong" data-reveal="right" style="--d:.3s">
-              <img src="assets/img/arbeiten/braut-perlen-s.webp" width="560" height="1090" alt="Romantische Locken mit Perlenschmuck" loading="lazy">
-            </figure>
+          <div class="bridal__visual">
+            <img class="bloom bridal__stem" src="assets/img/orchid/stem-760.webp" srcset="assets/img/orchid/stem-760.webp 760w, assets/img/orchid/stem-1400.webp 1400w" sizes="(max-width: 900px) 70vw, 460px" width="760" height="576" alt="" loading="lazy">
+            <div class="bridal__grid">
+              <figure class="bridal__shot bridal__shot--tall glass glass--strong" data-reveal="scale" style="--d:.1s">
+                <img src="assets/img/arbeiten/braut-schleier-s.webp" width="550" height="977" alt="Braut mit Schleier und kunstvoller Hochsteckfrisur" loading="lazy">
+              </figure>
+              <figure class="bridal__shot glass glass--strong" data-reveal="scale" style="--d:.2s">
+                <img src="assets/img/gallery/look-01-l.webp" width="768" height="1024" alt="Brautfrisur mit Blütenschmuck und Perlen" loading="lazy">
+              </figure>
+              <figure class="bridal__shot glass glass--strong" data-reveal="scale" style="--d:.3s">
+                <img src="assets/img/gallery/look-03-l.webp" width="1200" height="797" alt="Hochsteckfrisur wird mit Haarschmuck vollendet" loading="lazy">
+              </figure>
+            </div>
           </div>
         </div>
       </div>
@@ -504,7 +509,7 @@
             <h2 class="h2" id="gallery-title" data-split>Echte Ergebnisse aus <em>unserem Studio</em>.</h2>
           </div>
           <div class="gallery__aside" data-reveal style="--d:.2s">
-            <p class="lead">Ein kleiner Einblick in Schnitte, Farben und Hochsteckfrisuren, die bei uns entstanden sind.</p>
+            <p class="lead">Ein kleiner Einblick in Locken, Flechtfrisuren und Hochsteckfrisuren, die bei uns entstanden sind.</p>
             <div class="gallery__nav">
               <button class="icon-btn" type="button" data-gallery-prev aria-label="Vorherige Bilder"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-chev-left"/></svg></button>
               <button class="icon-btn" type="button" data-gallery-next aria-label="Nächste Bilder"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-chev-right"/></svg></button>
@@ -515,21 +520,13 @@
       </div>
       <div class="gallery__rail" data-gallery tabindex="0" aria-label="Bildergalerie, horizontal scrollbar">
         <ul class="gallery__track">
-          <li><button class="look glass" type="button" data-look="assets/img/arbeiten/balayage-l.webp"><img src="assets/img/arbeiten/balayage-s.webp" width="560" height="746" alt="Lange Haare mit weicher Balayage" loading="lazy"><span class="look__tag">Balayage</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-01-l.webp"><img src="assets/img/gallery/look-01-s.webp" width="560" height="747" alt="Brautfrisur mit Blütenschmuck" loading="lazy"><span class="look__tag">Brautfrisur</span></button></li>
           <li><button class="look glass" type="button" data-look="assets/img/arbeiten/locken-l.webp"><img src="assets/img/arbeiten/locken-s.webp" width="560" height="746" alt="Goldblonde Wellen mit viel Volumen" loading="lazy"><span class="look__tag">Blond und Wellen</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-03-l.webp"><img src="assets/img/gallery/look-03-s.webp" width="560" height="372" alt="Hochsteckfrisur wird mit Haarschmuck vollendet" loading="lazy" class="is-landscape"><span class="look__tag">Hochsteckfrisur</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/arbeiten/straehnen-l.webp"><img src="assets/img/arbeiten/straehnen-s.webp" width="560" height="750" alt="Glattes langes Haar mit feinen Strähnen" loading="lazy"><span class="look__tag">Strähnen</span></button></li>
+          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-01-l.webp"><img src="assets/img/gallery/look-01-s.webp" width="560" height="747" alt="Brautfrisur mit Blütenschmuck" loading="lazy"><span class="look__tag">Brautfrisur</span></button></li>
           <li><button class="look glass" type="button" data-look="assets/img/arbeiten/flecht-l.webp"><img src="assets/img/arbeiten/flecht-s.webp" width="560" height="560" alt="Zwei geflochtene Zöpfe" loading="lazy"><span class="look__tag">Flechtfrisur</span></button></li>
+          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-03-l.webp"><img src="assets/img/gallery/look-03-s.webp" width="560" height="372" alt="Hochsteckfrisur wird mit Haarschmuck vollendet" loading="lazy" class="is-landscape"><span class="look__tag">Hochsteckfrisur</span></button></li>
           <li><button class="look glass" type="button" data-look="assets/img/arbeiten/bob-l.webp"><img src="assets/img/arbeiten/bob-s.webp" width="560" height="746" alt="Silberblonde Locken mit Volumen" loading="lazy"><span class="look__tag">Locken</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-06-l.webp"><img src="assets/img/gallery/look-06-s.webp" width="560" height="747" alt="Langes braunes Haar mit hellen Spitzen" loading="lazy"><span class="look__tag">Schnitt und Farbe</span></button></li>
           <li><button class="look glass" type="button" data-look="assets/img/arbeiten/braut-l.webp"><img src="assets/img/arbeiten/braut-s.webp" width="560" height="747" alt="Romantische Locken mit Perlen" loading="lazy"><span class="look__tag">Brautlocken</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/arbeiten/glatt-l.webp"><img src="assets/img/arbeiten/glatt-s.webp" width="560" height="669" alt="Langer Stufenschnitt in Hellbraun" loading="lazy"><span class="look__tag">Stufenschnitt</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-08-l.webp"><img src="assets/img/gallery/look-08-s.webp" width="560" height="747" alt="Schulterlanger Schnitt mit Karamelltönen" loading="lazy"><span class="look__tag">Schnitt und Farbe</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/arbeiten/kind-l.webp"><img src="assets/img/arbeiten/kind-s.webp" width="560" height="746" alt="Kinderhaarschnitt mit Seitenscheitel" loading="lazy"><span class="look__tag">Kinderschnitt</span></button></li>
           <li><button class="look glass" type="button" data-look="assets/img/gallery/look-15-l.webp"><img src="assets/img/gallery/look-15-s.webp" width="560" height="420" alt="Elegante Hochsteckfrisur" loading="lazy" class="is-landscape"><span class="look__tag">Hochsteckfrisur</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-00-l.webp"><img src="assets/img/gallery/look-00-s.webp" width="560" height="747" alt="Blonder, voluminös gestylter Bob" loading="lazy"><span class="look__tag">Volumen</span></button></li>
-          <li><button class="look glass" type="button" data-look="assets/img/gallery/look-04-l.webp"><img src="assets/img/gallery/look-04-s.webp" width="560" height="747" alt="Kurzhaarschnitt mit weißem Volumen" loading="lazy"><span class="look__tag">Kurzhaar</span></button></li>
         </ul>
       </div>
       <div class="container">
@@ -593,9 +590,10 @@
         </header>
 
         <div class="contact__grid">
+          <img class="bloom contact__bloom" src="assets/img/orchid/strauss-731.webp" width="731" height="488" alt="" loading="lazy">
           <div class="contact__card glass glass--lg" data-reveal>
             <div class="contact__status" data-open-status>
-              <span class="status-dot"></span>
+              <svg aria-hidden="true"><use href="assets/img/icons.svg#i-clock"/></svg>
               <span data-open-text>Öffnungszeiten</span>
             </div>
             <h3 class="h3">Öffnungszeiten</h3>
