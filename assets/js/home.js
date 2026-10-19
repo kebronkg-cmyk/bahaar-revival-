@@ -223,6 +223,25 @@
   }
 
   /* ------------------------------------------------------------------
+     Studio: lila Verblendung, echte Farben per Schalter oder Antippen
+     ------------------------------------------------------------------ */
+  const studio = document.querySelector('[data-studio]');
+  if (studio) {
+    const toggle = studio.querySelector('[data-studio-toggle]');
+    toggle?.addEventListener('click', () => {
+      const on = toggle.getAttribute('aria-pressed') !== 'true';
+      toggle.setAttribute('aria-pressed', String(on));
+      studio.classList.toggle('is-real', on);
+      studio.querySelectorAll('[data-studio-shot]').forEach((s) => s.classList.remove('is-real'));
+    });
+    if (!matchMedia('(hover: hover)').matches) {
+      studio.querySelectorAll('[data-studio-shot]').forEach((shot) => {
+        shot.addEventListener('click', () => shot.classList.toggle('is-real'));
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Karte erst nach Klick laden (Datenschutz)
      ------------------------------------------------------------------ */
   const map = document.querySelector('[data-map]');

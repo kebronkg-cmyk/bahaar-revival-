@@ -1,4 +1,4 @@
-/* BaHaar's Styling Studio – Preisseite: Suche, Kategorie-Navigation, Haarlänge, Termin-Planer */
+/* BaHaar's Styling Studio – Preisseite: Suche, Kategorie-Navigation, Haarlänge, Terminplaner */
 (() => {
   'use strict';
 
@@ -176,14 +176,16 @@
     sections.forEach((sec) => {
       const visible = sec.querySelectorAll('.svc:not([hidden])').length;
       sec.hidden = visible === 0;
-      sec.querySelector('[data-count]').textContent = visible;
+      const countEl = sec.querySelector('[data-count]');
+      countEl.textContent = visible;
+      countEl.classList.toggle('is-one', visible === 1);
       const link = navLinks.find((a) => a.dataset.navCat === sec.id);
       link.querySelector('[data-nav-count]').textContent = visible;
       link.classList.toggle('is-empty', visible === 0);
     });
     empty.hidden = hits > 0;
     clearBtn.hidden = !q;
-    status.textContent = !q ? `${total} Leistungen` : hits ? `${hits} ${hits === 1 ? 'Treffer' : 'Treffer'} für „${q}“` : `Keine Treffer für „${q}“`;
+    status.textContent = !q ? `${total} Leistungen` : hits ? `${hits} Treffer für „${q}“` : `Keine Treffer für „${q}“`;
     const firstVisible = sections.find((s) => !s.hidden);
     if (firstVisible && (!activeId || document.getElementById(activeId)?.hidden)) setActive(firstVisible.id);
     requestAnimationFrame(moveBlob);
@@ -220,7 +222,7 @@
   });
 
   /* ------------------------------------------------------------------
-     Termin-Planer
+     Terminplaner
      ------------------------------------------------------------------ */
   const planner = document.querySelector('[data-planner]');
   const pBody = planner.querySelector('[data-planner-body]');
@@ -239,7 +241,7 @@
     const max = li.dataset.p1max ? Number(li.dataset.p1max) : base;
     return { min: base, max, from: 'from' in li.dataset };
   }
-  const priceLabel = ({ min, max, from }) => (from ? 'ab ' : '') + (min === max ? fmtEuro(min) : `${min}–${fmtEuro(max)}`);
+  const priceLabel = ({ min, max, from }) => (from ? 'ab ' : '') + (min === max ? fmtEuro(min) : `${min} bis ${fmtEuro(max)}`);
   function durationLabel(mins) {
     if (!mins) return '';
     const h = Math.floor(mins / 60), m = mins % 60;
@@ -253,7 +255,7 @@
       li.classList.toggle('is-picked', on);
       const btn = li.querySelector('.svc__add');
       btn.setAttribute('aria-pressed', String(on));
-      btn.setAttribute('aria-label', `${nameOf(li)} ${on ? 'aus dem Termin-Planer entfernen' : 'zum Termin-Planer hinzufügen'}`);
+      btn.setAttribute('aria-label', `${nameOf(li)} ${on ? 'aus dem Terminplaner entfernen' : 'zum Terminplaner hinzufügen'}`);
     });
     planner.hidden = list.length === 0;
     body.classList.toggle('has-planner', list.length > 0);
@@ -319,9 +321,9 @@
   const copyBtn = planner.querySelector('[data-planner-copy]');
   copyBtn.addEventListener('click', async () => {
     const list = [...picked].map((id) => byId.get(id));
-    const lines = list.map((li) => `– ${nameOf(li)} (${priceLabel(priceOf(li)).replace(' ', ' ')})`);
+    const lines = list.map((li) => `• ${nameOf(li)} (${priceLabel(priceOf(li)).replace(' ', ' ')})`);
     const text = [
-      'Meine Wunschleistungen – BaHaar’s Styling Studio',
+      'Meine Wunschleistungen bei BaHaar’s Styling Studio',
       `Haarlänge: ${length === 'long' ? 'lang' : 'kurz/mittel'}`,
       ...lines,
       `Richtwert: ${pTotal.textContent.replace(' ', ' ')} · ${pDur.textContent}`,
@@ -355,7 +357,7 @@
     document.documentElement.style.setProperty('--toolbar-h', `${toolbar.offsetHeight}px`);
   }).observe(toolbar);
   const small = matchMedia('(max-width: 600px)');
-  const setPlaceholder = () => { input.placeholder = small.matches ? 'Leistung suchen' : 'Leistung suchen – z. B. Balayage, Bart, Hochzeit'; };
+  const setPlaceholder = () => { input.placeholder = small.matches ? 'Suchen' : 'Leistung suchen, z. B. Balayage, Bart, Hochzeit'; };
   setPlaceholder();
   small.addEventListener?.('change', setPlaceholder);
 

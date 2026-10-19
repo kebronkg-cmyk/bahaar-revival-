@@ -166,7 +166,7 @@
       setMenu(false);
       if (!frameWrap.querySelector('iframe')) {
         const iframe = document.createElement('iframe');
-        iframe.title = 'Online-Terminbuchung BaHaar’s Styling Studio';
+        iframe.title = 'Onlinebuchung bei BaHaar’s Styling Studio';
         iframe.src = link.href;
         iframe.loading = 'eager';
         iframe.allow = 'payment';
@@ -233,7 +233,10 @@
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    revealEls.forEach((el) => io.observe(el));
+    revealEls.forEach((el) => {
+      // Alles im ersten Bildschirm (Hero) erscheint sofort, auch ganz unten am Rand
+      if (el.closest('[data-hero]')) el.classList.add('is-in'); else io.observe(el);
+    });
   } else {
     revealEls.forEach((el) => el.classList.add('is-in'));
   }

@@ -121,6 +121,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   min-height: 100vh;
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -919,7 +920,7 @@ body.menu-open { overflow: hidden; }
   overflow: visible;
 }
 .booking::backdrop {
-  background: rgba(12, 52, 60, 0.32);
+  background: rgba(30, 24, 82, 0.32);
   -webkit-backdrop-filter: blur(10px) saturate(140%);
   backdrop-filter: blur(10px) saturate(140%);
 }
@@ -1143,7 +1144,7 @@ body.menu-open { overflow: hidden; }
 /* Fallback, falls backdrop-filter fehlt */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass { background: rgba(255, 255, 255, 0.88); }
-  .glass--dark { background: rgba(12, 52, 60, 0.85); }
+  .glass--dark { background: rgba(30, 24, 82, 0.85); }
   .site-header__bar { background: rgba(255, 255, 255, 0.92); }
   .menu { background: #f4f1ff; }
 }
@@ -1170,3 +1171,14 @@ body.menu-open { overflow: hidden; }
   color: transparent;
 }
 .notfound__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Leichter auf Handy und Tablet ----------
+   Bewegte Hintergründe hinter Glas zwingen das Gerät, die Unschärfe in jedem Bild
+   neu zu rechnen. Auf Touchgeräten steht der Hintergrund deshalb still, das Korn
+   entfällt und die Glasunschärfe ist etwas geringer. */
+@media (hover: none), (max-width: 899px) {
+  :root { --glass-blur: blur(14px) saturate(160%); }
+  .atmosphere::before,
+  .atmosphere::after { animation: none; will-change: auto; }
+  .grain { display: none; }
+}

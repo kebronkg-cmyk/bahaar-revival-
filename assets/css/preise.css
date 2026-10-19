@@ -337,6 +337,7 @@ html.header-hidden { --toolbar-top: 12px; }
   white-space: nowrap;
 }
 .cat__count::after { content: " Leistungen"; }
+.cat__count.is-one::after { content: " Leistung"; }
 .cat__cols {
   display: none;
   justify-content: flex-end;

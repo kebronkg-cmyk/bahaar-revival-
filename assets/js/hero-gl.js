@@ -13,6 +13,10 @@
   if (!hero || !stage || !canvas) return;
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Der Glas-Shader läuft nur am Rechner mit Maus und breitem Fenster. Handy und
+  // Tablet behalten die ruhige HTML/CSS-Fassung: schont Akku und bleibt gestochen scharf.
+  const desktop = matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)');
+  if (!desktop.matches) { hero.classList.add('hero--static'); return; }
   const gl = canvas.getContext('webgl2', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'high-performance' });
   if (!gl) { hero.classList.add('hero--static'); return; }
 
@@ -412,8 +416,9 @@
     lastNow = now;
     raf = requestAnimationFrame(frame);
   }
+  let off = false;
   function start() {
-    if (running || reduceMotion) return;
+    if (running || reduceMotion || off) return;
     running = true;
     lastNow = 0;
     raf = requestAnimationFrame(frame);
@@ -440,6 +445,13 @@
       if (visible && !document.hidden) start(); else stop();
     }).observe(hero);
     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else if (visible) start(); });
+    desktop.addEventListener?.('change', (m) => {
+      if (m.matches) return;
+      off = true;
+      stop();
+      hero.classList.remove('is-gl', 'is-gl-done');
+      hero.classList.add('hero--static');
+    });
     start();
   }).catch((err) => {
     console.warn('Hero-Bilder konnten nicht geladen werden:', err);
