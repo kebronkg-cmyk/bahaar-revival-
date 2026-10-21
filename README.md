@@ -14,6 +14,11 @@ Designsprache: **Liquid Glass** in Lavendel und Violett mit weichem Türkis als 
 
 Statische Website ohne Buildschritt. Einfach alle Dateien auf den Webspace laden.
 
+## Fassungen
+
+- Hauptfassung im Wurzelordner (alter Link bleibt unverändert)
+- `v2/`: überarbeitete Fassung mit mehr Türkis, ruhigerem Hero, neuer Blütenanordnung und einheitlichen Brautbildern. Eigene Kopie aller Seiten und Bilder, nicht indexiert (`noindex`). Gemeinsame Blöcke dort mit `node tools/sync-partials.mjs v2` abgleichen.
+
 ## Häufige Änderungen
 
 - **Preise**: direkt in `preise.html` (jede Leistung ist ein `<li class="svc">` mit `data-p1` = Preis kurz/mittel, `data-p2` = Preis lang, `data-p1max` = Obergrenze bei Spannen, `data-dur` = Dauer in Minuten). Den Ausschnitt auf der Startseite (`index.html`, Abschnitt „Preise“) bitte mitpflegen.

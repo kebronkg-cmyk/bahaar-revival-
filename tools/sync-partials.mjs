@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // Überträgt gemeinsame Blöcke (Header, Footer, Dialoge) von index.html in alle anderen Seiten.
-// Aufruf: node tools/sync-partials.mjs
+// Aufruf: node tools/sync-partials.mjs [ordner]   (ohne Ordner: Hauptfassung, sonst z. B. v2)
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const root = join(dirname(fileURLToPath(import.meta.url)), '..', process.argv[2] || '.');
 const source = readFileSync(join(root, 'index.html'), 'utf8');
 const blocks = ['header', 'footer', 'dialogs'];
 const re = (name) => new RegExp(`([ \\t]*<!-- shared:${name} -->)[\\s\\S]*?(<!-- /shared:${name} -->)`);
