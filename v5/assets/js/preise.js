@@ -318,6 +318,23 @@
     if (e.key === 'Escape' && !pBody.hidden) { pBody.hidden = true; pToggle.setAttribute('aria-expanded', 'false'); pToggle.focus(); }
   });
 
+  /* WhatsApp: Auswahl als fertige Nachricht an das Studio */
+  const WHATSAPP = '49896923644'; // Nummer des Studios für WhatsApp (ohne +, ohne Leerzeichen)
+  const waBtn = planner.querySelector('[data-planner-wa]');
+  const waText = () => {
+    const list = [...picked].map((id) => byId.get(id)).filter(Boolean);
+    return [
+      'Hallo Bahar, ich interessiere mich für folgende Leistungen:',
+      ...list.map((li) => `• ${nameOf(li)} (${priceLabel(priceOf(li)).replace(' ', ' ')})`),
+      `Haarlänge: ${length === 'long' ? 'lang' : 'kurz/mittel'}`,
+      `Richtwert: ${pTotal.textContent.replace(' ', ' ')} · ${pDur.textContent}`,
+      'Wann hättest du einen Termin frei? Danke!',
+    ].join('\n');
+  };
+  waBtn?.addEventListener('click', (e) => {
+    waBtn.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waText())}`;
+  });
+
   const copyBtn = planner.querySelector('[data-planner-copy]');
   copyBtn.addEventListener('click', async () => {
     const list = [...picked].map((id) => byId.get(id));

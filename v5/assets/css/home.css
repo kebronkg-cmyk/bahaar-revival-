@@ -2247,3 +2247,11 @@ a.card:hover .card__link svg { transform: translateX(5px); }
   .b-contact { --w: clamp(400px, 34vw, 480px); }
 }
 @media (max-width: 899px) { .reviews__head { gap: 110px; } .b-score { --w: 280px; left: 0; } }
+
+/* ---------- Handy: keine Schere ---------- */
+@media (max-width: 899px) { .prices__schere { display: none; } }
+
+/* ---------- Finale: „du selbst“ hell auf dunklem Grund ---------- */
+.finale .display em, .finale em.is-split .split-word {
+  --em-grad: linear-gradient(100deg, #ffffff 0%, #c9fbf6 40%, #8fe9e1 75%, #b7cbff 100%);
+}

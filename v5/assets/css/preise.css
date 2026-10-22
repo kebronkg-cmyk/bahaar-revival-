@@ -651,3 +651,13 @@ body[data-length="long"] .svc__price[data-len="short"] {
 .to-top.is-visible { opacity: 1; translate: 0 0; pointer-events: auto; }
 body.has-planner .to-top { bottom: calc(96px + env(safe-area-inset-bottom)); }
 body.has-planner .site-footer { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+
+/* WhatsApp im Terminplaner */
+.planner__actions { flex-wrap: wrap; }
+.btn--whatsapp {
+  color: #fff;
+  background: linear-gradient(180deg, #3fd47a 0%, #25b863 55%, #1c9a52 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -6px 12px rgba(10, 80, 40, 0.25), 0 12px 24px -14px rgba(28, 154, 82, 0.7);
+}
+.btn--whatsapp:hover { background: linear-gradient(180deg, #47dc82 0%, #2bc169 55%, #1fa358 100%); }
+.btn--whatsapp svg { width: 18px; height: 18px; }
