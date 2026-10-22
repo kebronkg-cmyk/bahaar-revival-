@@ -1732,3 +1732,23 @@ a.card:hover .card__link svg { transform: translateX(5px); }
   .comp { --S: min(108vw, 480px); top: 58px; }
   .hero { padding-top: calc(58px + min(108vw, 480px) * 0.8); }
 }
+
+/* Ladenfront im Rahmen der Glasplatte */
+.comp__platte { overflow: hidden; }
+.comp__platte .comp__laden {
+  position: absolute;
+  z-index: 0;
+  inset: var(--bevel);
+  width: calc(100% - 2 * var(--bevel));
+  height: calc(100% - 2 * var(--bevel));
+  object-fit: cover;
+  object-position: 42% 50%;
+  border-radius: max(4px, calc(var(--r) - var(--bevel)));
+  filter: saturate(1.05) brightness(1.03);
+}
+.comp__platte .drop { z-index: 1; }
+/* Schild „BaHaar’s“ bleibt frei: Schere und Blüte sitzen über der Tür links */
+.comp__schere { left: 25%; top: 7%; rotate: -18deg; }
+.comp__vorn--gelenk { left: 28.5%; top: 37%; }
+.comp__blatt--auf { left: 64%; top: 70%; }
+.comp__platte .comp__laden { object-position: 36% 50%; }
