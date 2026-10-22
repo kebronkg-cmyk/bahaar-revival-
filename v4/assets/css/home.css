@@ -2085,3 +2085,165 @@ a.card:hover .card__link svg { transform: translateX(5px); }
 .stem-bluete { left: -52px; top: -64px; }
 @media (max-width: 759px) { .stem-stiel { left: auto; right: -14px; top: 90px; height: 240px; } .stem-bluete { right: -10px; } }
 @media (max-width: 1239px) and (min-width: 760px) { .stem-stiel { left: -30px; } .stem-bluete { left: -40px; } }
+
+/* ==========================================================================
+   v4.5 · Gestecke statt Einzelblüten
+   Jedes Gesteck hat in der Vorlage einen Eckpunkt, an dem die Glasplatte lag.
+   Dieser Punkt sitzt genau auf der Kartenecke, so wachsen die Blüten scheinbar
+   hinter der Karte hervor. --g ist die Breite des Gestecks.
+   gesteck-a: Ecke bei 52,8 % / 28,8 %  (Höhe = 1,2554 × Breite)
+   gesteck-b: Ecke bei 40,6 % / 62,7 %  (Höhe = 1,0042 × Breite)
+   ========================================================================== */
+.harmonie, .vein-stiel, .vein-bluete, .sculpt, .stem-stiel, .stem-bluete, .petal-r { display: none; }
+.gesteck {
+  position: absolute;
+  z-index: 3;
+  width: var(--g);
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 18px rgba(20, 40, 130, 0.22));
+}
+.g-tr { --g: clamp(190px, 18vw, 260px); right: calc(var(--g) * -0.472 + 18px); top: calc(var(--g) * -0.3616 + 18px); }
+.g-br { --g: clamp(190px, 18vw, 260px); right: calc(var(--g) * -0.406 + 18px); bottom: calc(var(--g) * -0.3746 + 18px); scale: -1 1; }
+.g-bl { --g: clamp(190px, 18vw, 260px); left: calc(var(--g) * -0.406 + 18px); bottom: calc(var(--g) * -0.3746 + 18px); }
+
+/* Wrapper übernehmen die Rasterposition der Karten */
+.gwrap { position: relative; min-width: 0; }
+.gwrap > .card { height: 100%; }
+@media (min-width: 640px) { .gwrap--feature, .gwrap--kosmetik { grid-column: span 2; } }
+@media (min-width: 1080px) {
+  .gwrap--feature { grid-column: 1 / span 2; grid-row: 1 / span 2; }
+  .gwrap--kosmetik { grid-column: span 2; }
+}
+@media (max-width: 639px) { .gwrap--feature, .gwrap--kosmetik { grid-column: span 2; } }
+
+/* Studio: Stiel-Gesteck, Blüten über der oberen rechten Ecke des Hauptbildes */
+.g-studio { --g: clamp(170px, 15vw, 220px); left: calc(60.8% - var(--g) * 0.72); top: calc(var(--g) * -0.42); rotate: 8deg; }
+@media (max-width: 899px) { .g-studio { --g: 150px; left: auto; right: -20px; top: -70px; } }
+
+/* Preise: beide Gestecke ein Stück größer, die Liste ist die größte Karte */
+.g-price-tr, .g-price-bl { --g: clamp(200px, 19vw, 280px); }
+.prices__stage { padding-top: 90px; padding-bottom: 90px; }
+.prices__schere { top: clamp(150px, 15vw, 190px); }
+
+/* Kontakt: Blüten oben links auf der Karte, Stiele laufen außen hinab */
+.g-contact { --g: clamp(160px, 13vw, 190px); left: calc(var(--g) * -0.42); top: calc(var(--g) * -0.36); rotate: -6deg; }
+@media (max-width: 759px) { .g-contact { --g: 140px; left: auto; right: -14px; top: -60px; scale: -1 1; rotate: 6deg; } }
+
+/* Bewertungen: kleines Gesteck an der Bewertungskarte */
+.g-score { --g: 170px; }
+
+@media (max-width: 639px) {
+  .g-tr, .g-br, .g-bl { --g: 160px; }
+  .g-price-tr, .g-price-bl { --g: 170px; }
+  .g-tr { right: calc(var(--g) * -0.472 + 34px); }
+  .g-bl { left: calc(var(--g) * -0.406 + 34px); }
+  .g-br { right: calc(var(--g) * -0.406 + 34px); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .is-settled.gesteck { animation: wiegen 8s ease-in-out infinite alternate; }
+}
+/* v4.5b · Gestecke liegen auf den Kartenkanten, nie am Bildschirmrand */
+.g-feature { --g: clamp(180px, 15vw, 220px); top: calc(var(--g) * -0.3616 + 6px); }
+.g-kosmetik { --g: clamp(200px, 17vw, 250px); left: 12%; }
+.g-price-tl { --g: clamp(190px, 16vw, 230px); left: calc(var(--g) * -0.528 + 18px); top: calc(var(--g) * -0.3616 + 4px); }
+.g-price-bl { --g: clamp(190px, 16vw, 230px); }
+.prices__schere { left: auto; right: 26px; top: 46px; rotate: 78deg; width: clamp(70px, 6vw, 90px); }
+.prices__stage { padding-top: 90px; padding-bottom: 100px; }
+.g-score { --g: 170px; }
+/* Kontakt: das Stiel-Gesteck wächst hinter der Karte hoch, die Blüten stehen über der Kante */
+.g-contact { z-index: 0; --g: clamp(170px, 14vw, 200px); left: 14%; top: calc(var(--g) * -0.74); rotate: -4deg; scale: 1; }
+.stem-wrap > .contact__card { position: relative; z-index: 1; }
+.contact__grid { margin-top: clamp(110px, 10vw, 140px); }
+@media (max-width: 759px) { .g-contact { --g: 150px; left: 20%; right: auto; top: calc(var(--g) * -0.74); scale: 1; rotate: -4deg; } }
+@media (max-width: 639px) {
+  .g-feature { --g: 160px; }
+  .g-kosmetik { --g: 170px; left: 8%; }
+  .g-price-tl { --g: 160px; left: calc(var(--g) * -0.528 + 40px); }
+  .g-price-bl { --g: 160px; left: calc(var(--g) * -0.406 + 40px); }
+  .g-score { --g: 150px; left: calc(var(--g) * -0.406 + 40px); }
+  .prices__schere { right: 18px; top: 34px; width: 60px; }
+}
+/* v4.5c · Gestecke groß wie beim Brautrahmen */
+.g-feature { --g: clamp(240px, 22vw, 320px); top: calc(var(--g) * -0.3616 + 2px); }
+.g-kosmetik { --g: clamp(260px, 24vw, 340px); left: 6%; }
+.price-panel > .gesteck { z-index: 4; }
+.g-price-tl { --g: clamp(250px, 23vw, 330px); left: calc(var(--g) * -0.528 + 40px); top: calc(var(--g) * -0.3616 + 2px); }
+.g-price-bl { --g: clamp(250px, 23vw, 330px); left: calc(var(--g) * -0.406 + 40px); bottom: calc(var(--g) * -0.3746 + 14px); }
+.prices__stage { padding-top: 110px; padding-bottom: 120px; }
+.g-score { --g: clamp(220px, 20vw, 280px); left: calc(var(--g) * -0.406 + 30px); bottom: calc(var(--g) * -0.3746 + 14px); }
+.g-contact { --g: clamp(220px, 18vw, 260px); left: 10%; top: calc(var(--g) * -0.7); }
+.contact__grid { margin-top: clamp(140px, 13vw, 180px); }
+@media (max-width: 639px) {
+  .g-feature { --g: 220px; right: calc(var(--g) * -0.472 + 60px); }
+  .g-kosmetik { --g: 230px; left: 4%; }
+  .g-price-tl { --g: 220px; left: calc(var(--g) * -0.528 + 70px); }
+  .g-price-bl { --g: 220px; left: calc(var(--g) * -0.406 + 60px); }
+  .g-score { --g: 210px; left: calc(var(--g) * -0.406 + 60px); }
+  .g-contact { --g: 190px; left: 16%; top: calc(var(--g) * -0.7); }
+  .contact__grid { margin-top: 130px; }
+}
+
+/* ==========================================================================
+   v4.6 · Blütenbänder aus der „Blue Orchid“-Vorlage hinter den Karten
+   band-oben:  Kante der Glasplatte bei 63,2 % der Höhe (Höhe = 0,347 × Breite)
+   band-unten: Kante bei 10,9 % der Höhe (Höhe = 0,3595 × Breite)
+   Die Bänder liegen hinter der Karte, wachsen also hinter ihr hervor und
+   verdecken nie Text.
+   ========================================================================== */
+.gesteck { display: none; }
+.band {
+  position: absolute;
+  z-index: 0;
+  width: var(--w);
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 16px rgba(20, 40, 130, 0.2));
+}
+.gwrap > .card, .gwrap > .price-panel, .score-wrap > .reviews__score, .stem-wrap > .contact__card { position: relative; z-index: 1; }
+.studio__shot--main { z-index: 1; }
+.b-top, .b-feature, .b-price-top, .b-contact { top: calc(var(--w) * -0.2193 + 14px); }
+.b-kosmetik, .b-studio, .b-price-bot, .b-score { bottom: calc(var(--w) * -0.3203 + 14px); }
+
+.b-feature { --w: clamp(380px, 36vw, 520px); left: 4%; }
+.b-kosmetik { --w: clamp(360px, 32vw, 460px); right: 4%; scale: -1 1; }
+.b-studio { --w: clamp(360px, 34vw, 480px); left: 8%; }
+.gwrap--price { position: relative; }
+.b-price-top { --w: clamp(380px, 36vw, 500px); left: 6%; scale: -1 1; }
+.b-price-bot { --w: clamp(380px, 36vw, 500px); right: 2%; }
+.prices__stage { padding-top: 140px; padding-bottom: 150px; }
+.prices__schere { z-index: 3; top: 156px; right: 26px; }
+.b-score { --w: 320px; left: -14%; }
+.b-contact { --w: clamp(340px, 30vw, 420px); left: -6%; }
+.contact__grid { margin-top: clamp(130px, 12vw, 160px); }
+.reviews__head { padding-bottom: 80px; }
+
+@media (max-width: 899px) {
+  .b-feature { --w: 92%; left: 4%; }
+  .b-kosmetik { --w: 86%; right: 6%; }
+  .b-studio { --w: 88%; left: 6%; }
+  .b-price-top, .b-price-bot { --w: 90%; }
+  .b-score { --w: 300px; left: -6%; }
+  .b-contact { --w: 92%; left: 4%; }
+  .b-feature, .b-price-top, .b-contact { top: calc(var(--w) * -0.2193 + 14px); }
+}
+@media (max-width: 639px) {
+  .b-feature, .b-price-top, .b-contact { --w: min(92vw, 380px); }
+  .b-kosmetik, .b-studio, .b-price-bot { --w: min(88vw, 360px); }
+  .services .section-head { margin-bottom: 100px; }
+  .prices__stage { padding-top: 110px; padding-bottom: 120px; }
+  .prices__schere { top: 120px; }
+}
+.prices__schere { right: auto; left: -50px; top: 190px; rotate: -38deg; width: clamp(84px, 8vw, 118px); }
+@media (max-width: 999px) { .prices__schere { left: -14px; } }
+@media (max-width: 639px) { .prices__schere { left: 8px; top: 64px; width: 62px; rotate: 64deg; } }
+@media (min-width: 900px) {
+  .b-feature { --w: clamp(440px, 42vw, 600px); left: 2%; }
+  .b-kosmetik { --w: clamp(420px, 38vw, 540px); }
+  .b-studio { --w: clamp(420px, 40vw, 560px); }
+  .b-price-top, .b-price-bot { --w: clamp(440px, 40vw, 560px); }
+  .b-contact { --w: clamp(400px, 34vw, 480px); }
+}
+@media (max-width: 899px) { .reviews__head { gap: 110px; } .b-score { --w: 280px; left: 0; } }
