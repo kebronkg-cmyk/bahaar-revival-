@@ -232,7 +232,7 @@
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }, { rootMargin: '0px 0px 12% 0px', threshold: 0 });
     revealEls.forEach((el) => {
       // Alles im ersten Bildschirm (Hero) erscheint sofort, auch ganz unten am Rand
       if (el.closest('[data-hero]')) el.classList.add('is-in'); else io.observe(el);

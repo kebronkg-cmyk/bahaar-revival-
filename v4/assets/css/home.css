@@ -1319,7 +1319,7 @@ a.card:hover .card__link svg { transform: translateX(5px); }
   transition: translate 0.5s var(--ease-spring);
 }
 .studio__toggle[aria-pressed="true"] .studio__switch {
-  background: conic-gradient(from 200deg, #f7a8c4, #ffd27a, #8fe0c2, #7fb4ff, #b9a6ff, #f7a8c4);
+  background: conic-gradient(from 200deg, #f7a8c4, #c9b2ff, #8fe0d6, #7fb4ff, #b9a6ff, #f7a8c4);
 }
 .studio__toggle[aria-pressed="true"] .studio__switch::after { translate: 18px 0; }
 
@@ -1626,7 +1626,7 @@ a.card:hover .card__link svg { transform: translateX(5px); }
 .comp__caustic {
   left: 16%; right: 8%; top: 86%; height: 13%;
   border-radius: 50%;
-  background: conic-gradient(from 90deg at 50% 0%, rgba(255, 170, 220, 0.55), rgba(170, 200, 255, 0.6), rgba(150, 240, 220, 0.55), rgba(255, 236, 170, 0.5), rgba(255, 170, 220, 0.55));
+  background: conic-gradient(from 90deg at 50% 0%, rgba(255, 170, 220, 0.55), rgba(170, 200, 255, 0.6), rgba(150, 240, 220, 0.55), rgba(200, 176, 255, 0.5), rgba(255, 170, 220, 0.55));
   filter: blur(18px);
   opacity: 0.65;
 }
@@ -1752,3 +1752,86 @@ a.card:hover .card__link svg { transform: translateX(5px); }
 .comp__vorn--gelenk { left: 28.5%; top: 37%; }
 .comp__blatt--auf { left: 64%; top: 70%; }
 .comp__platte .comp__laden { object-position: 36% 50%; }
+
+/* ---------- Hero v4.1: Ladenfront groß im Glasrahmen, ohne Schere ----------
+   Die Platte hat genau das Seitenverhältnis des Fotos (Rahmen bis zur Wand),
+   sitzt mittig in der Blütenkomposition und ist größer als das Loch im Kranz,
+   damit die Blüten nur von außen um das Glas greifen. */
+.comp__platte {
+  left: 16.5%;
+  top: 25.4%;
+  width: 67%;
+  height: auto;
+  aspect-ratio: 685 / 548;
+}
+.comp__platte .comp__laden { object-position: 50% 50%; }
+.comp__hinten--1 { left: 70%; top: 18%; height: 60%; }
+.comp__hinten--2 { display: none; }
+/* vorne: eine blaue Blüte auf der unteren rechten Ecke, eine türkise unten links */
+.comp__vorn--ecke { left: 72%; top: 71%; width: 20%; rotate: 18deg; filter: saturate(1.15) brightness(1.08) drop-shadow(0 16px 16px rgba(20, 40, 130, 0.3)); }
+.comp__vorn--kante { left: 7%; top: 66%; width: 20%; rotate: -16deg; }
+.comp__blatt--auf { left: 22%; top: 21%; width: 5.6%; rotate: -24deg; }
+.comp__platte .drop:nth-of-type(n) { opacity: 0.85; }
+
+/* Die Schere liegt schräg an der oberen linken Ecke der Preisliste, wie abgelegt */
+.prices__schere {
+  position: absolute;
+  z-index: 3;
+  left: -58px;
+  top: clamp(96px, 11vw, 150px);
+  width: clamp(92px, 9vw, 128px);
+  height: auto;
+  rotate: -38deg;
+  pointer-events: none;
+  filter: drop-shadow(0 22px 16px rgba(20, 24, 80, 0.3)) drop-shadow(0 4px 4px rgba(20, 24, 80, 0.22));
+}
+@media (max-width: 999px) { .prices__schere { left: -18px; } }
+@media (max-width: 560px) { .prices__schere { left: 4px; top: 22px; width: 72px; rotate: 52deg; } }
+
+@media (max-width: 560px) { .prices__schere { left: 16px; top: 34px; width: 58px; rotate: 64deg; } }
+
+/* ---------- Brautkarte: die Ranke wächst hinter dem Glas heraus und legt sich davor ----------
+   Zwei identische Bilder liegen deckungsgleich: das hintere unter der Glaskarte
+   (dort mattiert sichtbar), das vordere darüber, aber nur dort eingeblendet, wo
+   die Blüten aus dem Glas heraustreten. So beginnt der Stiel im Glas und die
+   Blüten liegen davor, komplett sichtbar. */
+.bridal__wrap { --g1: clamp(260px, 32vw, 460px); --g2: clamp(260px, 32vw, 470px); }
+.ranke {
+  position: absolute;
+  left: 30%;
+  top: -190px;
+  width: clamp(380px, 40vw, 560px);
+  height: auto;
+  max-width: none;
+  rotate: -4deg;
+  pointer-events: none;
+}
+.ranke--hinten { z-index: 0; filter: drop-shadow(0 18px 20px rgba(30, 50, 140, 0.18)); }
+.ranke--vorn {
+  z-index: 2;
+  -webkit-mask-image: linear-gradient(28deg, transparent 0 34%, #000 46%);
+  mask-image: linear-gradient(28deg, transparent 0 34%, #000 46%);
+  filter: drop-shadow(0 16px 16px rgba(20, 40, 130, 0.26));
+}
+@media (min-width: 980px) {
+  .bridal__card { padding-top: clamp(120px, 12vw, 170px); }
+}
+@media (max-width: 979px) {
+  .bridal__wrap { margin-top: 120px; --g1: 220px; --g2: 230px; }
+  .ranke { left: 18%; top: -150px; width: min(86vw, 400px); }
+  .bridal__card { padding-top: 110px; }
+}
+/* Feinabstimmung: nur der Stielansatz (unteres Viertel) liegt im Glas, die Blüten liegen davor */
+.ranke { left: 40%; top: -262px; width: clamp(360px, 32vw, 460px); rotate: -6deg; }
+.ranke--vorn {
+  -webkit-mask-image: linear-gradient(to top, transparent 0 16%, #000 30%);
+  mask-image: linear-gradient(to top, transparent 0 16%, #000 30%);
+}
+@media (min-width: 980px) { .bridal__card { padding-top: 150px; } }
+@media (max-width: 979px) {
+  .bridal__wrap { margin-top: 170px; }
+  .ranke { left: 22%; top: -214px; width: min(78vw, 330px); }
+  .bridal__card { padding-top: 96px; }
+}
+@media (max-width: 899px) { .hero { padding-top: calc(58px + min(108vw, 480px) * 0.86); } }
+@media (max-width: 560px) { .prices__schere { left: 42px; top: 40px; } }
