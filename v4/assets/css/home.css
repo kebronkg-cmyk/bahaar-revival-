@@ -1995,3 +1995,93 @@ a.card:hover .card__link svg { transform: translateX(5px); }
     opacity 0.9s cubic-bezier(0.3, 0, 0.3, 1) var(--gd, 0s);
 }
 @media (min-width: 1181px) { .comp { --S: min(55vw, calc(100svh - 60px), 860px); top: 64px; right: max(8px, calc(50% - 712px)); } }
+
+/* ==========================================================================
+   v4.4 · Motive aus den Konzept-Vorlagen
+   Jede Blüte ist an einer Karte oder einem Bild verankert und wächst von dort.
+   ========================================================================== */
+[class^="petal-"], .harmonie__bluete, .vein-stiel, .vein-bluete, .sculpt, .stem-stiel, .stem-bluete {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 14px rgba(20, 40, 130, 0.24));
+}
+
+/* Über Bahar · „Dynamic Flow“: das runde Porträt sitzt genau dort, wo in der
+   Vorlage die runde Glasscheibe liegt, der Kranz läuft dahinter herum */
+.about__figure { width: min(100%, 560px); aspect-ratio: 441 / 418; }
+.about__portrait { inset: auto; left: 12.2%; top: 13.6%; width: 64%; height: auto; aspect-ratio: 1; z-index: 1; }
+.about__kranz { z-index: 0; filter: drop-shadow(0 14px 16px rgba(20, 40, 130, 0.2)); }
+
+/* Leistungen · „Dezente Harmonie“: eine große Blüte an der oberen Ecke der
+   Hauptkarte, drei Blütenblätter schweben darüber */
+.bento { position: relative; }
+.harmonie { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.harmonie__bluete { width: clamp(120px, 11vw, 160px); left: calc(50% - clamp(96px, 8.6vw, 128px)); top: clamp(-70px, -5vw, -50px); rotate: 8deg; }
+.petal-m--1 { width: 34px; left: calc(50% - 210px); top: -64px; rotate: -20deg; }
+.petal-m--2 { width: 26px; left: calc(50% + 56px); top: -40px; rotate: 30deg; }
+.petal-m--3 { width: 34px; left: 18%; top: -38px; rotate: 10deg; filter: blur(0.6px) drop-shadow(0 8px 10px rgba(20, 40, 130, 0.2)); }
+@media (max-width: 1079px) {
+  .harmonie__bluete { left: auto; right: -14px; top: -58px; }
+  .petal-m--1 { left: auto; right: 150px; }
+  .petal-m--2 { left: auto; right: 120px; top: -26px; }
+}
+@media (max-width: 639px) {
+  .harmonie__bluete { width: 112px; right: -6px; top: -50px; }
+  .petal-m--1 { right: 128px; top: -44px; width: 28px; }
+  .petal-m--2 { right: 104px; top: -14px; width: 20px; }
+  .petal-m--3 { left: 10%; top: -30px; width: 28px; }
+}
+
+/* Studio · „Minimal Vein“: ein Stiel steht senkrecht am Hauptbild,
+   eine Blüte legt sich über dessen obere rechte Ecke */
+.studio__grid { position: relative; }
+.vein-stiel { z-index: 3; left: -18px; bottom: 6%; height: 58%; width: auto; rotate: 2deg; }
+.vein-bluete { z-index: 3; width: clamp(130px, 12vw, 170px); left: calc(60.8% - clamp(110px, 9vw, 140px)); top: clamp(-70px, -5vw, -48px); rotate: 10deg; }
+@media (max-width: 899px) {
+  .vein-stiel { left: -10px; bottom: auto; top: 6%; height: 300px; }
+  .vein-bluete { left: auto; right: -8px; top: -52px; width: 120px; }
+}
+
+/* Preise · „Sculpted Petal“: Blüten an zwei Ecken der Preisliste, Blätter daneben */
+.prices__stage { padding-top: 70px; }
+.sculpt { z-index: 3; }
+.sculpt--or { width: clamp(120px, 11vw, 160px); right: -42px; top: 18px; rotate: 14deg; }
+.sculpt--ul { width: clamp(90px, 8vw, 116px); left: -44px; bottom: 6px; rotate: -10deg; }
+.sculpt--p1 { width: 40px; left: -56px; top: 46%; rotate: -14deg; }
+.sculpt--p2 { width: 24px; right: 22%; bottom: 6px; rotate: 24deg; }
+@media (max-width: 560px) {
+  .prices__stage { padding-top: 64px; }
+  .sculpt--or { width: 110px; right: -6px; top: 6px; }
+  .sculpt--ul { width: 80px; left: -6px; bottom: 10px; }
+  .sculpt--p1 { left: 8px; top: 30px; width: 30px; }
+}
+
+/* Kontakt · „Vertical Stem“: Blüte oben auf der Karte, Stiel läuft an der Seite hinab */
+.stem-wrap { position: relative; min-width: 0; }
+.stem-wrap > .contact__card { height: 100%; }
+.stem-stiel { z-index: 3; left: -20px; top: 10px; height: clamp(260px, 30vw, 360px); width: auto; }
+.stem-bluete { z-index: 4; width: clamp(110px, 9vw, 130px); left: -34px; top: -60px; rotate: -8deg; }
+@media (max-width: 759px) {
+  .stem-stiel { left: auto; right: -8px; height: 280px; scale: -1 1; }
+  .stem-bluete { left: auto; right: -14px; top: -54px; width: 104px; }
+}
+
+/* Bewertungen: lose Blütenblätter um die Bewertungskarte */
+.score-wrap { position: relative; }
+.petal-r { z-index: 3; }
+.petal-r--1 { width: 34px; right: -26px; top: -10px; rotate: 18deg; }
+.petal-r--2 { width: 40px; right: 30px; top: -44px; rotate: -24deg; }
+.petal-r--3 { width: 38px; left: -18px; bottom: 6px; rotate: 12deg; filter: blur(0.6px) drop-shadow(0 8px 10px rgba(20, 40, 130, 0.2)); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .is-settled.harmonie__bluete, .is-settled.vein-bluete, .is-settled.sculpt--or, .is-settled.stem-bluete { animation: wiegen 7.5s ease-in-out infinite alternate; }
+}
+.harmonie__bluete { --r0: 8deg; } .vein-bluete { --r0: 10deg; } .sculpt--or { --r0: 14deg; } .stem-bluete { --r0: -8deg; }
+.vein-stiel { height: clamp(250px, 24vw, 330px); left: -24px; bottom: 8%; }
+@media (max-width: 899px) { .vein-stiel { height: 240px; bottom: auto; top: 30px; } }
+/* Kontakt: Stiel außen neben der Karte, nie über Text */
+.stem-stiel { left: -42px; top: 30px; }
+.stem-bluete { left: -52px; top: -64px; }
+@media (max-width: 759px) { .stem-stiel { left: auto; right: -14px; top: 90px; height: 240px; } .stem-bluete { right: -10px; } }
+@media (max-width: 1239px) and (min-width: 760px) { .stem-stiel { left: -30px; } .stem-bluete { left: -40px; } }
