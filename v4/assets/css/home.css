@@ -1,0 +1,1734 @@
+/* ==========================================================================
+   Startseite
+   ========================================================================== */
+
+/* ---------- Hero ---------- */
+.hero {
+  /* Bildkomposition (wird vom WebGL-Hero exakt übernommen) */
+  --hh: max(100svh, 720px);
+  --sz: min(82svh, 760px);
+  --bx: max(1vw, calc(50% - 650px));
+  --by: calc(50% - var(--sz) * 0.5 + 36px);
+  position: relative;
+  min-height: var(--hh);
+  display: grid;
+  align-items: center;
+  padding: calc(var(--header-h) + 48px) 0 96px;
+  overflow: clip;
+  isolation: isolate;
+}
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero__aurora {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(45% 55% at 76% 42%, rgba(178, 160, 255, 0.9), transparent 70%),
+    radial-gradient(35% 45% at 10% 88%, rgba(248, 226, 236, 0.75), transparent 70%),
+    radial-gradient(40% 40% at 30% 16%, rgba(236, 232, 255, 0.9), transparent 70%),
+    radial-gradient(38% 42% at 62% 94%, rgba(176, 236, 228, 0.85), transparent 70%),
+    radial-gradient(30% 34% at 98% 12%, rgba(190, 240, 233, 0.8), transparent 70%),
+    linear-gradient(180deg, #f1edff, #ebe5ff);
+}
+.hero__ribbon {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 58%;
+  height: 26%;
+  border-radius: 50%;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(236, 232, 255, 0.55) 25%, rgba(255, 200, 236, 0.55) 50%, rgba(190, 220, 255, 0.55) 75%, rgba(255, 255, 255, 0));
+  filter: blur(30px);
+  transform: rotate(-8deg);
+  opacity: 0.8;
+}
+/* Busch aus Orchideen mit der Schere in der Mitte (alle Maße relativ zur Buschgröße --sz) */
+.hero__sprite {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  transform-origin: 50% 0%;
+  filter: drop-shadow(0 26px 34px rgba(40, 30, 120, 0.22)) drop-shadow(0 6px 10px rgba(40, 30, 120, 0.12));
+}
+.hero__rispe--l {
+  width: calc(var(--sz) * 0.4);
+  right: calc(var(--bx) + var(--sz) * 0.5);
+  top: calc(var(--by) + var(--sz) * 0.06);
+  rotate: -16deg;
+  scale: -1 1;
+  filter: blur(1.6px) drop-shadow(0 20px 26px rgba(40, 30, 120, 0.18));
+}
+.hero__rispe--r {
+  width: calc(var(--sz) * 0.46);
+  right: calc(var(--bx) + var(--sz) * 0.04);
+  top: calc(var(--by) - var(--sz) * 0.02);
+  rotate: 9deg;
+}
+.hero__schere {
+  width: calc(var(--sz) * 0.4);
+  right: calc(var(--bx) + var(--sz) * 0.285);
+  top: calc(var(--by) + var(--sz) * 0.02);
+  rotate: 4deg;
+  filter: drop-shadow(0 30px 30px rgba(30, 20, 90, 0.3)) drop-shadow(0 6px 8px rgba(30, 20, 90, 0.2));
+}
+.hero__bluete {
+  width: calc(var(--sz) * 0.34);
+  right: calc(var(--bx) + var(--sz) * 0.33);
+  top: calc(var(--by) + var(--sz) * 0.28);
+  rotate: -10deg;
+}
+.hero__bluete-b {
+  width: calc(var(--sz) * 0.2);
+  right: calc(var(--bx) + var(--sz) * 0.74);
+  top: calc(var(--by) + var(--sz) * 0.68);
+  rotate: 22deg;
+  filter: blur(3px);
+  opacity: 0.92;
+}
+.hero__drop { width: 96px; height: 96px; }
+.hero__drop--1 { right: calc(var(--bx) + var(--sz) * 0.7); top: calc(var(--by) + var(--sz) * 0.16); }
+.hero__drop--2 { right: calc(var(--bx) + var(--sz) * 0.06); top: calc(var(--by) + var(--sz) * 0.6); width: 64px; height: 64px; }
+.hero__drop--3 { right: calc(var(--bx) + var(--sz) * 0.46); top: calc(var(--by) + var(--sz) * 0.86); width: 44px; height: 44px; }
+
+
+.js .hero__bloom { animation: none; }
+
+.hero__gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out);
+  touch-action: pan-y;
+}
+.hero.is-gl .hero__gl { opacity: 1; }
+.hero.is-gl-done .hero__sprite,
+.hero.is-gl-done .hero__drop,
+.hero.is-gl-done .hero__ribbon { visibility: hidden; }
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero__card { pointer-events: none; }
+.hero__card > * { pointer-events: auto; }
+.hero__call { display: none; }
+.hero__front { display: none; }
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.hero__meta .chip img { width: 16px; height: 16px; }
+.hero__title {
+  font-size: var(--fs-hero);
+  max-width: 6.6em;
+  text-wrap: balance;
+}
+.hero__title em { padding-right: 0.01em; }
+.hero__lead {
+  margin-top: 28px;
+  max-width: 33em;
+  color: var(--ink-2);
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 36px;
+}
+.hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+  padding: 10px 22px 10px 10px;
+  border-radius: 24px;
+  transition: transform 0.5s var(--ease-spring);
+}
+.hero__rating:hover { transform: translateY(-2px); }
+.hero__rating-score {
+  display: grid;
+  place-items: center;
+  width: 64px; height: 56px;
+  border-radius: 17px;
+  font-family: var(--font-display);
+  font-size: 2.15rem;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(160deg, var(--badge-tq-a), var(--badge-tq-b));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -8px 14px rgba(10, 70, 66, 0.28), 0 10px 22px -10px rgba(19, 102, 95, 0.75);
+}
+.hero__rating-body { display: grid; gap: 3px; font-size: 0.9rem; color: var(--ink-2); }
+.hero__rating-body strong { color: var(--ink); font-weight: 700; }
+
+.hero__scroll {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 26px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  translate: -50% 0;
+}
+.hero__scroll-line {
+  position: relative;
+  width: 1.5px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(40, 30, 120, 0.15);
+}
+.hero__scroll-line::after {
+  content: "";
+  position: absolute;
+  left: 0; top: -40%;
+  width: 100%; height: 40%;
+  background: linear-gradient(180deg, transparent, var(--ac-500));
+  animation: scroll-line 2.2s var(--ease-soft) infinite;
+}
+@keyframes scroll-line { to { top: 110%; } }
+
+@media (min-width: 900px) {
+  .hero__scroll { display: flex; }
+  .hero__card > :not(.hero__title):not(.hero__meta) { max-width: 600px; }
+}
+
+/* Handy und Tablet: kein Shader, keine Blasen, keine schwebenden Schilder.
+   Oben der Orchideenbusch mit der Schere, darüber eine Glaskarte mit allem Wichtigen. */
+@media (max-width: 899px) {
+  .hero {
+    --sz: min(100vw, 52svh, 470px);
+    --bx: calc(50% - var(--sz) * 0.49);
+    --by: 74px;
+    display: block;
+    min-height: auto;
+    padding: calc(var(--by) + var(--sz) * 0.58) 0 36px;
+  }
+  .hero__drop,
+  .hero__ribbon,
+  .hero__gl { display: none; }
+  .hero__aurora {
+    background:
+      radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 100%) 50% calc(var(--by) + var(--sz) * 0.05) / calc(var(--sz) * 1.1) calc(var(--sz) * 0.85) no-repeat,
+      radial-gradient(60% 40% at 82% 18%, rgba(178, 160, 255, 0.75), transparent 70%),
+      radial-gradient(55% 34% at 8% 30%, rgba(176, 236, 228, 0.85), transparent 70%),
+      radial-gradient(60% 40% at 10% 70%, rgba(248, 226, 236, 0.7), transparent 70%),
+      radial-gradient(70% 40% at 70% 95%, rgba(190, 238, 231, 0.8), transparent 70%),
+      linear-gradient(180deg, #f1edff, #ebe5ff);
+  }
+  .hero__sprite { filter: drop-shadow(0 18px 22px rgba(40, 30, 120, 0.2)); }
+  .hero__rispe--l { filter: blur(1.4px) drop-shadow(0 14px 18px rgba(40, 30, 120, 0.14)); }
+  .hero__schere { filter: drop-shadow(0 20px 20px rgba(30, 20, 90, 0.28)) drop-shadow(0 4px 6px rgba(30, 20, 90, 0.18)); }
+  .hero__bluete-b { filter: blur(2.5px); }
+
+  .hero__content { width: min(100% - 24px, 560px); }
+  .hero__card {
+    position: relative;
+    isolation: isolate;
+    padding: 24px 20px 20px;
+    border-radius: 34px;
+    pointer-events: auto;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0, rgba(255, 255, 255, 0.6) 120px, rgba(255, 255, 255, 0.5) 100%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 30px 60px -30px rgba(40, 30, 120, 0.5),
+      0 10px 24px -14px rgba(40, 30, 120, 0.25);
+  }
+  .hero__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1.2px;
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.15) 35%, rgba(214, 200, 255, 0.6) 65%, rgba(255, 214, 240, 0.7));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
+  .hero__meta { margin-bottom: 16px; }
+  .hero__meta .chip:first-child { display: none; }
+  .hero__meta .chip { background: rgba(255, 255, 255, 0.6); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .hero__title { max-width: none; font-size: clamp(2.5rem, 11.4vw, 3.5rem); }
+  .hero__lead { margin-top: 14px; font-size: 1rem; line-height: 1.6; }
+  .hero__cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .hero__cta .btn { width: 100%; justify-content: center; padding-inline: 14px; }
+  .hero__book { grid-column: 1 / -1; }
+  .hero__call { display: inline-flex; }
+  .hero__prices .btn__arrow { display: none; }
+  .hero__rating {
+    display: flex;
+    margin-top: 16px;
+    padding: 14px 4px 0;
+    gap: 14px;
+    border-radius: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    border-top: 1px solid rgba(106, 79, 240, 0.14);
+  }
+  .hero__rating::before,
+  .hero__rating::after { display: none; }
+  .hero__rating:hover { transform: none; }
+  .hero__rating-score { width: 52px; height: 44px; border-radius: 14px; font-size: 1.7rem; }
+  /* eine Blüte ruht auf der oberen rechten Kante der Karte, neben dem Status */
+  .hero__front {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    left: calc(50% + var(--sz) * 0.13);
+    top: calc(var(--by) + var(--sz) * 0.2 + 40px);
+    width: calc(var(--sz) * 0.3);
+    max-width: none;
+    height: auto;
+    rotate: 16deg;
+    pointer-events: none;
+    filter: drop-shadow(0 16px 16px rgba(40, 30, 120, 0.26)) drop-shadow(0 3px 4px rgba(40, 30, 120, 0.16));
+  }
+}
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  .hero__sprite { animation: hero-bush-in 1.3s var(--ease-out) both; }
+  .hero__rispe--r { animation-delay: 0.08s; }
+  .hero__bluete { animation-delay: 0.22s; }
+  .hero__bluete-b { animation-delay: 0.3s; }
+  .hero__front { animation: hero-bush-in 1.3s var(--ease-out) 0.45s both; }
+  .hero__schere {
+    animation: hero-schere-in 1.5s var(--ease-out) 0.15s both, hero-schere-sway 6s ease-in-out 1.7s infinite alternate;
+  }
+}
+@keyframes hero-bush-in { from { opacity: 0; translate: 0 22px; } }
+@keyframes hero-schere-in { from { opacity: 0; translate: 0 46px; } }
+@keyframes hero-schere-sway { to { rotate: 7deg; } }
+@media (min-width: 700px) and (max-width: 899px) {
+  .hero { --sz: min(80vw, 46svh, 470px); padding-bottom: 64px; }
+}
+
+/* ---------- Leistungen ---------- */
+.services { overflow: clip; }
+.services__bloom {
+  top: 4%;
+  right: -60px;
+  width: 260px;
+  rotate: -18deg;
+}
+.bento {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .card--feature, .card--kosmetik { grid-column: span 2; }
+}
+@media (min-width: 1080px) {
+  .bento { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(250px, auto); }
+  .card--feature { grid-column: 1 / span 2; grid-row: 1 / span 2; }
+  .card--kosmetik { grid-column: span 2; }
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  transform-style: flat;
+}
+a.card:hover { box-shadow: var(--glass-shadow-lg); }
+.card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.card__icon {
+  display: grid;
+  place-items: center;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  color: var(--tq-600);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(217, 246, 242, 0.72));
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 -8px 14px rgba(120, 220, 210, 0.22), 0 10px 22px -12px rgba(19, 102, 95, 0.45);
+}
+.card__icon svg { width: 24px; height: 24px; }
+.card__price {
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tq-ink);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(217, 246, 242, 0.75));
+  box-shadow: inset 0 0 0 1px rgba(31, 148, 141, 0.22);
+}
+.card__title { font-size: clamp(1.6rem, 1.3rem + 0.8vw, 2rem); }
+.card__text { color: var(--ink-2); font-size: 0.96rem; line-height: 1.55; }
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+.card__link svg { width: 16px; height: 16px; transition: transform 0.45s var(--ease-spring); }
+a.card:hover .card__link svg { transform: translateX(5px); }
+
+/* Feature-Karte: Foto und Text nebeneinander, nichts liegt über dem Haar */
+.card--feature {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 0;
+  padding: 10px;
+  overflow: hidden;
+}
+.card__photo {
+  position: relative;
+  display: block;
+  min-height: 100%;
+  border-radius: calc(var(--radius-lg) - 8px);
+  overflow: hidden;
+}
+.card__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 34%;
+  transition: transform 1.4s var(--ease-out);
+}
+.card--feature:hover .card__photo img { transform: scale(1.04); }
+.card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 20px 18px 26px;
+}
+.card--feature .card__body { justify-content: center; }
+.card--feature .card__link { margin-top: 14px; }
+.card__body .card__top { margin-bottom: 6px; }
+
+.card--kosmetik { overflow: hidden; min-height: 250px; }
+.card--kosmetik .card__text { max-width: 36ch; }
+.card--kosmetik > :not(.card__kosmetik-bloom) { position: relative; z-index: 1; }
+.card__kosmetik-bloom {
+  position: absolute;
+  z-index: 0;
+  right: -54px;
+  bottom: -72px;
+  width: 250px;
+  max-width: none;
+  rotate: -16deg;
+  pointer-events: none;
+  filter: drop-shadow(0 22px 26px rgba(19, 102, 95, 0.28));
+}
+.chip--new { color: var(--accent-ink); }
+.inline-link { font-weight: 700; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1079px) {
+  .card__kosmetik-bloom { width: 200px; right: -44px; }
+}
+@media (min-width: 640px) and (max-width: 1079px) {
+  .card--feature { min-height: 440px; }
+}
+/* Handy: Feature-Karte mit Foto oben, alle anderen Leistungen als kompakte Kacheln */
+@media (max-width: 639px) {
+  .bento { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card--feature,
+  .card--kosmetik { grid-column: span 2; }
+  .card--feature { grid-template-columns: 1fr; padding: 8px; }
+  .card__photo { min-height: 0; aspect-ratio: 1 / 1.05; }
+  .card__body { padding: 18px 14px 12px; }
+  .card--feature .card__text { font-size: 0.92rem; }
+  .card:not(.card--feature):not(.card--kosmetik) {
+    gap: 4px;
+    padding: 14px 14px 16px;
+    border-radius: 22px;
+  }
+  .card:not(.card--feature):not(.card--kosmetik) .card__top { margin-bottom: 8px; }
+  .card:not(.card--feature):not(.card--kosmetik) .card__icon { width: 40px; height: 40px; }
+  .card:not(.card--feature):not(.card--kosmetik) .card__icon svg { width: 19px; height: 19px; }
+  .card:not(.card--feature):not(.card--kosmetik) .card__price { padding: 5px 9px; font-size: 0.74rem; }
+  .card:not(.card--feature):not(.card--kosmetik) .card__title { font-size: 1.32rem; line-height: 1.05; }
+  .card:not(.card--feature):not(.card--kosmetik) .card__text,
+  .card:not(.card--feature):not(.card--kosmetik) .card__link { display: none; }
+  .card--kosmetik { min-height: 0; padding: 18px; }
+  .card--kosmetik .card__top { margin-bottom: 4px; }
+  .card__kosmetik-bloom { width: 150px; right: -40px; bottom: -52px; }
+  .card--kosmetik .card__text { max-width: calc(100% - 92px); }
+}
+
+/* ---------- Über Bahar ---------- */
+.about__grid {
+  display: grid;
+  gap: clamp(56px, 8vw, 110px);
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .about__grid { grid-template-columns: 0.85fr 1.15fr; }
+}
+.about__figure {
+  position: relative;
+  margin: 0 auto;
+  width: min(100%, 440px);
+}
+.about__arch {
+  padding: 12px;
+  border-radius: 999px 999px 40px 40px;
+}
+.about__arch img {
+  width: 100%;
+  aspect-ratio: 624 / 940;
+  object-fit: cover;
+  object-position: 50% 12%;
+  border-radius: 999px 999px 30px 30px;
+}
+.about__arch { position: relative; z-index: 1; }
+.about__badge { z-index: 2; }
+/* ein Bogen aus Orchideen liegt wie eine Krone hinter der Rundung des Porträts */
+.about__crown {
+  z-index: 0;
+  left: 50%;
+  top: -12%;
+  width: 118%;
+  translate: -50% 0;
+  rotate: -5deg;
+}
+.about__badge {
+  position: absolute;
+  right: -7%;
+  bottom: 9%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px 14px 16px;
+  border-radius: 22px;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--ink-2);
+}
+.about__badge-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 0.9;
+  background: linear-gradient(160deg, #3fb8ae, #1a8f8a 55%, #4f7fdc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.about__copy { margin-top: 26px; }
+.about__copy p:not(.lead) { color: var(--ink-2); max-width: 58ch; }
+.about__copy .lead { color: var(--ink); font-weight: 500; }
+/* Bahars eigener Satz als Zitat: groß, kursiv, mit türkiser Linie */
+.about__quote {
+  position: relative;
+  margin: 34px 0 0;
+  padding: 2px 0 2px 28px;
+  max-width: 28ch;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.55rem, 1.2rem + 1.1vw, 2.15rem);
+  line-height: 1.22;
+  color: var(--ink);
+}
+.about__quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--tq-300), var(--tq-600) 60%, var(--ac-500));
+}
+.about__sign {
+  display: grid;
+  gap: 4px;
+  margin-top: 30px;
+}
+.about__sign-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 3.4rem;
+  line-height: 0.9;
+  background: var(--em-grad, linear-gradient(100deg, #6a4ff0, #8a63f2 42%, #4f7fdc));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.about__sign-role { font-size: 0.9rem; color: var(--ink-3); }
+@media (max-width: 600px) {
+  .about__figure { width: min(78%, 360px); }
+  .about__badge { right: -14%; }
+}
+
+/* ---------- Preise (Ausschnitt) ---------- */
+.prices__grid {
+  display: grid;
+  gap: clamp(48px, 7vw, 90px);
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .prices__grid { grid-template-columns: 0.8fr 1.2fr; }
+}
+.prices__intro .lead { margin-top: 22px; }
+.prices__facts {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+.prices__facts li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.prices__facts svg {
+  width: 30px; height: 30px;
+  padding: 6px;
+  border-radius: 50%;
+  color: var(--tq-600);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(120, 220, 210, 0.35), 0 6px 14px -8px rgba(31, 148, 141, 0.5);
+  flex: none;
+}
+.prices__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+/* der Orchideenzweig darf bis an den Rand ragen, aber nie seitlich scrollen lassen */
+.prices,
+.about,
+.studio,
+.contact { overflow-x: clip; }
+.prices__stage {
+  position: relative;
+  padding: clamp(150px, 15vw, 200px) 0 40px;
+}
+.prices__bloom {
+  position: absolute;
+  z-index: 0;
+  top: clamp(-40px, -2vw, -10px);
+  right: -7%;
+  width: min(86%, 620px);
+  max-width: none;
+  rotate: -3deg;
+  pointer-events: none;
+  filter: drop-shadow(0 26px 30px rgba(31, 100, 140, 0.28)) drop-shadow(0 6px 10px rgba(40, 30, 120, 0.14));
+}
+.price-panel {
+  position: relative;
+  z-index: 1;
+  padding: clamp(18px, 2.4vw, 28px);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.4));
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+.price-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+
+
+.price-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 17px 6px;
+  border-bottom: 1px solid rgba(40, 30, 120, 0.1);
+}
+.price-list li:last-child { border-bottom: 0; }
+.price-list__name {
+  display: grid;
+  gap: 3px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.price-list__name small {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+.price-list__price {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.price-list__price.is-flip { animation: flip 0.6s var(--ease-out); }
+@keyframes flip {
+  0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+.price-tab.is-entering li { animation: item-in 0.7s var(--ease-out) both; }
+.price-tab.is-entering li:nth-child(2) { animation-delay: 0.04s; }
+.price-tab.is-entering li:nth-child(3) { animation-delay: 0.08s; }
+.price-tab.is-entering li:nth-child(4) { animation-delay: 0.12s; }
+.price-tab.is-entering li:nth-child(5) { animation-delay: 0.16s; }
+@keyframes item-in { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+
+.price-panel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 14px 10px 14px 20px;
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 0.92rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  transition: background 0.3s;
+}
+.price-panel__foot:hover { background: rgba(255, 255, 255, 0.75); }
+.price-panel__go {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  flex: none;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(180deg, var(--badge-a), var(--badge-b));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 16px -6px rgba(106, 79, 240, 0.8);
+  transition: transform 0.45s var(--ease-spring);
+}
+.price-panel__go svg { width: 18px; height: 18px; }
+.price-panel__foot:hover .price-panel__go { transform: translateX(4px); }
+@media (max-width: 560px) {
+  .price-panel__head { flex-direction: column; align-items: stretch; }
+  .segmented { justify-content: flex-start; }
+  .length-toggle { align-self: flex-start; }
+  .price-list__price { font-size: 1.55rem; }
+  .prices__stage { padding-top: 132px; }
+  .prices__bloom { right: -12%; top: -18px; width: 96%; }
+}
+
+/* ---------- Brautstyling ---------- */
+.bridal__card {
+  display: grid;
+  gap: 40px;
+  padding: clamp(28px, 5vw, 64px);
+  border-radius: 44px;
+  overflow: hidden;
+}
+@media (min-width: 980px) {
+  .bridal__card { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+}
+.bridal__text > p:not(.eyebrow):not(.lead) { color: var(--ink-2); max-width: 54ch; }
+.bridal__text .lead { margin: 24px 0 14px; color: var(--ink); }
+.bridal__price {
+  display: inline-grid;
+  gap: 2px;
+  padding: 14px 24px;
+  border-radius: 22px;
+}
+.bridal__price-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.bridal__price-value { font-family: var(--font-display); font-size: 2.2rem; line-height: 1.1; }
+.bridal__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+.bridal__text { position: relative; z-index: 1; }
+.bridal__visual { position: relative; z-index: 1; }
+/* Vier gleich große Bilder im Raster, nichts wird langgezogen */
+.bridal__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.bridal__shot {
+  margin: 0;
+  padding: 7px;
+  border-radius: 26px;
+}
+.bridal__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.bridal__shot:nth-child(1) img { object-position: 50% 18%; }
+.bridal__shot:nth-child(2) img { object-position: 50% 35%; }
+.bridal__shot:nth-child(3) img { object-position: 38% 50%; }
+.bridal__shot:nth-child(4) img { object-position: 62% 45%; }
+/* ein heller Strauß liegt in der unteren linken Kartenecke, unter den Buttons */
+.bridal__bouquet {
+  z-index: 0;
+  left: -52px;
+  bottom: -88px;
+  width: min(42%, 330px);
+  rotate: 10deg;
+}
+@media (max-width: 979px) {
+  .bridal__bouquet { left: auto; bottom: auto; right: -38px; top: -26px; width: 168px; rotate: -8deg; }
+}
+@media (max-width: 560px) {
+  .bridal__grid { gap: 10px; }
+  .bridal__shot { padding: 5px; border-radius: 20px; }
+  .bridal__shot img { border-radius: 15px; }
+}
+
+/* ---------- Galerie ---------- */
+.gallery__aside { display: grid; gap: 22px; justify-items: start; }
+@media (min-width: 900px) { .gallery__aside { justify-items: end; text-align: right; } }
+.gallery__nav { display: flex; gap: 10px; align-items: center; }
+.gallery__rail {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(var(--gutter), calc((100vw - var(--maxw)) / 2));
+  scrollbar-width: none;
+  cursor: grab;
+  outline-offset: -4px;
+}
+.gallery__rail::-webkit-scrollbar { display: none; }
+.gallery__rail.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.gallery__rail.is-dragging .look { pointer-events: none; }
+.gallery__track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding: 18px max(var(--gutter), calc((100vw - var(--maxw)) / 2)) 30px;
+}
+.gallery__track li { scroll-snap-align: start; }
+.look {
+  position: relative;
+  display: block;
+  width: clamp(230px, 24vw, 320px);
+  padding: 8px;
+  border-radius: 28px;
+  text-align: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.gallery__track li:nth-child(even) .look { margin-top: 36px; }
+.look img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 21px;
+  transition: transform 1s var(--ease-out), filter 0.6s;
+}
+.look:hover { transform: translateY(-6px); }
+.look:hover img { transform: scale(1.02); }
+.look__tag {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
+  -webkit-backdrop-filter: blur(12px) saturate(170%);
+  backdrop-filter: blur(12px) saturate(170%);
+  box-shadow: inset 0 1px 0 #fff, 0 8px 18px -10px rgba(30, 24, 82, 0.5);
+}
+.gallery__progress {
+  position: relative;
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 2px rgba(40, 30, 120, 0.12);
+  overflow: hidden;
+}
+.gallery__progress span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w, 20%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ac-500), var(--orchid-400) 55%, var(--tq-400));
+  transform: translateX(var(--x, 0));
+  transition: transform 0.15s linear;
+}
+
+/* Lightbox */
+.lightbox {
+  width: 100vw;
+  height: 100dvh;
+  max-width: 100vw;
+  max-height: 100dvh;
+  margin: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+}
+.lightbox:not([open]) { display: none; }
+.lightbox::backdrop {
+  background: radial-gradient(60% 60% at 50% 50%, rgba(40, 30, 120, 0.55), rgba(14, 10, 40, 0.88));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.lightbox[open] .lightbox__figure { animation: dialog-in 0.6s var(--ease-out); }
+.lightbox__figure {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+.lightbox__figure img {
+  max-width: min(92vw, 1000px);
+  max-height: 82dvh;
+  width: auto;
+  border-radius: 26px;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.lightbox__figure figcaption { color: #fff; font-family: var(--font-display); font-size: 1.6rem; }
+.lightbox__close { position: fixed; top: calc(18px + env(safe-area-inset-top)); right: 18px; }
+.lightbox__prev, .lightbox__next { position: fixed; top: 50%; translate: 0 -50%; }
+.lightbox__prev { left: 18px; }
+.lightbox__next { right: 18px; }
+@media (max-width: 640px) {
+  .lightbox__prev, .lightbox__next { top: auto; bottom: calc(24px + env(safe-area-inset-bottom)); translate: none; }
+  .lightbox__prev { left: calc(50% - 60px); }
+  .lightbox__next { right: calc(50% - 60px); }
+}
+
+/* ---------- Stimmen ---------- */
+.reviews { overflow: clip; }
+.reviews__head {
+  display: grid;
+  gap: 36px;
+  align-items: center;
+  margin-bottom: clamp(40px, 6vw, 70px);
+}
+@media (min-width: 900px) {
+  .reviews__head { grid-template-columns: 300px 1fr; gap: 64px; }
+}
+.reviews__score {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 30px 24px 26px;
+  text-align: center;
+  rotate: -3deg;
+}
+.reviews__num {
+  font-family: var(--font-display);
+  font-size: 6.4rem;
+  line-height: 0.85;
+  background: linear-gradient(160deg, #8b72ff, #4f7fdc 52%, #1a8f8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stars--lg svg { width: 22px; height: 22px; }
+.reviews__count { font-weight: 700; }
+.reviews__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--accent-ink);
+}
+.reviews__source svg { width: 14px; height: 14px; }
+.reviews__title .lead { margin-top: 20px; }
+
+.reviews__flow {
+  display: grid;
+  gap: 22px;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.review-list {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 10px var(--gutter);
+  scrollbar-width: none;
+}
+.review-row {
+  display: flex;
+  overflow: hidden;
+  padding: 14px 0;
+}
+.review-row__track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 18px;
+  padding-right: 18px;
+  animation: marquee var(--dur, 80s) linear infinite;
+}
+.review-row--reverse .review-row__track { animation-direction: reverse; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+.review-row:hover .review-row__track,
+.review-row:focus-within .review-row__track { animation-play-state: paused; }
+.review {
+  flex: none;
+  width: clamp(280px, 30vw, 380px);
+  padding: 24px 24px 20px;
+  border-radius: 26px;
+  transition: transform 0.6s var(--ease-out);
+}
+.review:nth-child(odd) { translate: 0 -8px; }
+.review:nth-child(even) { translate: 0 8px; }
+.review:hover { transform: translateY(-4px) scale(1.01); }
+.review__stars {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: #f2b046;
+  text-shadow: 0 1px 1px rgba(200, 130, 20, 0.25);
+}
+.review blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.review footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 0.85rem;
+}
+.review footer strong { display: block; font-weight: 700; }
+.review footer small { color: var(--ink-3); font-size: 0.8rem; }
+.review__avatar {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  flex: none;
+  border-radius: 50%;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(150deg, var(--orchid-400), var(--ac-500));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 14px -6px rgba(106, 79, 240, 0.7);
+}
+.review:nth-child(3n) .review__avatar { background: linear-gradient(150deg, var(--badge-tq-a), var(--badge-tq-b)); }
+.review:nth-child(3n+1) .review__avatar { background: linear-gradient(150deg, #9f8cff, #4f7fdc); }
+
+/* ---------- Kontakt ---------- */
+.contact { overflow: clip; }
+.contact__grid {
+  display: grid;
+  gap: 18px;
+}
+@media (min-width: 760px) {
+  .contact__grid { grid-template-columns: 1fr 1fr; }
+  .map { grid-column: span 2; }
+}
+@media (min-width: 1120px) {
+  .contact__grid { grid-template-columns: 1fr 1fr 1.25fr; }
+  .map { grid-column: auto; }
+}
+.contact__card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 34px);
+}
+.contact__status {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+.hours { display: grid; gap: 2px; margin: 0; }
+.hours div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  transition: background 0.3s;
+}
+.hours dt { font-weight: 600; color: var(--ink-2); }
+.hours dd { margin: 0; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.hours .is-today {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
+  box-shadow: inset 0 1px 0 #fff, 0 8px 18px -12px rgba(40, 30, 120, 0.45);
+}
+.hours .is-today dt, .hours .is-today dd { color: var(--ink); font-weight: 700; }
+.hours .is-today dt::after {
+  content: "Heute";
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+  color: #fff;
+  background: linear-gradient(180deg, var(--badge-tq-a), var(--badge-tq-b));
+}
+.reach { display: grid; gap: 6px; }
+.reach a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 18px;
+  font-weight: 650;
+  word-break: break-word;
+  transition: background 0.3s;
+}
+.reach a:hover { background: rgba(255, 255, 255, 0.6); }
+.reach small {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.reach__icon {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  flex: none;
+  border-radius: 50%;
+  color: var(--tq-600);
+  background: linear-gradient(150deg, #fff, rgba(217, 246, 242, 0.75));
+  box-shadow: inset 0 1px 0 #fff, inset 0 -6px 12px rgba(120, 220, 210, 0.2), 0 8px 18px -10px rgba(19, 102, 95, 0.45);
+}
+.reach__icon svg { width: 20px; height: 20px; }
+.contact__book { margin-top: auto; }
+
+.map {
+  position: relative;
+  min-height: 440px;
+  padding: 10px;
+  overflow: hidden;
+}
+.map__placeholder,
+.map iframe {
+  position: absolute;
+  inset: 10px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.map iframe { width: calc(100% - 20px); height: calc(100% - 20px); border: 0; }
+.map__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.1);
+}
+.map__placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 50% 38%, rgba(255, 255, 255, 0), rgba(230, 224, 255, 0.55));
+}
+.map__pin {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 34%;
+  display: grid;
+  place-items: center;
+  width: 76px; height: 76px;
+  border-radius: 50% 50% 50% 6px;
+  rotate: -45deg;
+  translate: -50% -50%;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 #fff, 0 20px 40px -14px rgba(30, 24, 82, 0.6);
+}
+.map__pin img { rotate: 45deg; }
+.map__pin::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  animation: ping 2.6s var(--ease-out) infinite;
+}
+.map__info {
+  position: absolute;
+  z-index: 1;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px;
+  border-radius: 20px;
+}
+.map__info strong { font-family: var(--font-display); font-size: 1.45rem; font-weight: 400; }
+.map__info > span { color: var(--ink-2); font-size: 0.92rem; }
+.map__info small { color: var(--ink-3); font-size: 0.74rem; margin-top: 4px; }
+.map__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+/* ---------- Finale ---------- */
+.finale__quote {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  padding-bottom: clamp(30px, 6vw, 80px);
+}
+.finale__light {
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: min(70vw, 680px);
+  height: 110%;
+  translate: -50% 0;
+  background:
+    radial-gradient(18% 50% at 50% 45%, rgba(236, 232, 255, 0.28), transparent 70%),
+    radial-gradient(34% 30% at 50% 62%, rgba(120, 224, 214, 0.18), transparent 72%),
+    radial-gradient(50% 45% at 50% 50%, rgba(178, 160, 255, 0.22), transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+.finale__bloom {
+  position: absolute;
+  right: max(-40px, calc(50% - 700px));
+  top: -6%;
+  width: clamp(180px, 26vw, 360px);
+  rotate: 8deg;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 40px rgba(178, 160, 255, 0.55)) drop-shadow(0 0 90px rgba(106, 79, 240, 0.35));
+  pointer-events: none;
+}
+.finale__text {
+  position: relative;
+  margin: 0;
+  max-width: 15em;
+  font-size: clamp(2.6rem, 1.4rem + 4.6vw, 5.6rem);
+}
+.finale__text p { margin: 0; line-height: 1.02; }
+.finale__text p em {
+  --em-grad: linear-gradient(100deg, #d6ccff, #ffffff 50%, #f8d0ee);
+  text-shadow: none;
+  filter: drop-shadow(0 0 18px rgba(178, 160, 255, 0.7));
+}
+.finale__text footer {
+  margin-top: 26px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(236, 232, 255, 0.7);
+}
+.finale__cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 46px;
+}
+@media (max-width: 700px) {
+  .finale__bloom { right: -60px; top: -14%; opacity: 0.6; }
+  .finale__cta .btn { width: 100%; }
+}
+
+/* ---------- Studio ---------- */
+.studio__aside { display: grid; gap: 20px; justify-items: start; }
+@media (min-width: 900px) {
+  .studio__aside { justify-items: end; text-align: right; }
+}
+.studio__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 18px 7px 8px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: var(--ink);
+  cursor: pointer;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.45));
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 12px 26px -16px rgba(40, 30, 120, 0.5);
+  transition: transform 0.4s var(--ease-spring);
+}
+.studio__toggle:hover { transform: translateY(-1px); }
+.studio__switch {
+  position: relative;
+  width: 44px; height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--badge-a), var(--badge-b));
+  box-shadow: inset 0 1px 3px rgba(30, 20, 90, 0.35);
+  transition: background 0.5s;
+}
+.studio__switch::after {
+  content: "";
+  position: absolute;
+  left: 3px; top: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #fff, #ece8ff);
+  box-shadow: 0 2px 6px rgba(30, 20, 90, 0.35);
+  transition: translate 0.5s var(--ease-spring);
+}
+.studio__toggle[aria-pressed="true"] .studio__switch {
+  background: conic-gradient(from 200deg, #f7a8c4, #ffd27a, #8fe0c2, #7fb4ff, #b9a6ff, #f7a8c4);
+}
+.studio__toggle[aria-pressed="true"] .studio__switch::after { translate: 18px 0; }
+
+.studio__grid {
+  display: grid;
+  gap: 18px;
+}
+@media (min-width: 900px) {
+  .studio__grid {
+    grid-template-columns: 1.55fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 22px;
+    height: clamp(400px, 34vw, 480px);
+  }
+  .studio__shot--main { grid-row: span 2; }
+}
+.studio__shot {
+  position: relative;
+  margin: 0;
+  padding: 9px;
+  border-radius: 32px;
+  min-height: 0;
+}
+.studio__frame {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+}
+.studio__frame img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-out), filter 0.9s var(--ease-out);
+}
+.studio__shot--main .studio__frame img { object-position: 18% 50%; }
+@media (min-width: 900px) {
+  .studio__frame img { aspect-ratio: auto; }
+}
+/* Farbverblendung: Türkis und Weiß des Salons werden zu Lavendel und Perlmutt */
+.studio__frame::before,
+.studio__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.9s var(--ease-out);
+}
+.studio__frame::before {
+  background: linear-gradient(140deg, #c6bbf4 0%, #a7c3f0 40%, #7fd2c8 100%);
+  mix-blend-mode: color;
+  opacity: 0.74;
+}
+.studio__frame::after {
+  background:
+    radial-gradient(80% 70% at 12% 0%, rgba(255, 255, 255, 0.75), transparent 60%),
+    linear-gradient(180deg, rgba(243, 240, 255, 0.25) 0%, rgba(243, 240, 255, 0) 45%, rgba(31, 148, 141, 0.26));
+  mix-blend-mode: soft-light;
+}
+.studio__frame img { filter: brightness(1.04) contrast(1.04); }
+.studio.is-real .studio__frame::before,
+.studio__shot.is-real .studio__frame::before { opacity: 0; }
+.studio.is-real .studio__frame::after,
+.studio__shot.is-real .studio__frame::after { opacity: 0.35; }
+@media (hover: hover) {
+  .studio__shot:hover .studio__frame::before { opacity: 0; }
+  .studio__shot:hover .studio__frame::after { opacity: 0.35; }
+  .studio__shot:hover .studio__frame img { transform: scale(1.03); }
+}
+.studio__cap {
+  position: absolute;
+  z-index: 2;
+  left: 22px;
+  bottom: 22px;
+  display: grid;
+  gap: 1px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+.studio__cap strong { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+.studio__shot[data-studio-shot] { cursor: pointer; }
+@media (hover: hover) {
+  .studio__shot[data-studio-shot] { cursor: default; }
+}
+@media (max-width: 899px) {
+  .studio__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .studio__shot--main { grid-column: span 2; }
+  .studio__shot--main .studio__frame img { aspect-ratio: 4 / 3.2; }
+  .studio__shot:not(.studio__shot--main) { padding: 6px; border-radius: 24px; }
+  .studio__shot:not(.studio__shot--main) .studio__frame { border-radius: 18px; }
+  .studio__shot:not(.studio__shot--main) .studio__frame img { aspect-ratio: 1; }
+  .studio__shot:not(.studio__shot--main) .studio__cap span { display: none; }
+  .studio__cap { left: 14px; bottom: 14px; padding: 8px 14px; border-radius: 14px; }
+  .studio__shot:not(.studio__shot--main) .studio__cap { left: 10px; bottom: 10px; right: 10px; padding: 7px 10px; }
+  .studio__shot:not(.studio__shot--main) .studio__cap strong { font-size: 0.8rem; }
+}
+@media (hover: none), (max-width: 899px) {
+  /* laufende Bewertungen: deckendes Perlglas statt Live-Unschärfe */
+  .review.glass {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(250, 248, 255, 0.74));
+  }
+}
+
+/* ---------- Orchideen, gezielt verankert ---------- */
+/* Kontakt: eine helle Rispe wächst hinter der Karte nach oben in den freien Raum neben der Überschrift */
+.contact__grid { position: relative; }
+.contact__bloom {
+  right: -64px;
+  top: -262px;
+  width: 224px;
+  rotate: 6deg;
+}
+@media (max-width: 1119px) {
+  .contact__bloom { top: -200px; width: 170px; right: -20px; }
+}
+@media (max-width: 759px) {
+  /* auf dem Handy reicht der Platz neben der Überschrift nicht, die Rispe pausiert hier */
+  .contact__bloom { display: none; }
+}
+
+/* ---------- Türkiser Schimmer hinter einzelnen Abschnitten ----------
+   Weiche Lichtinseln statt Farbflächen: Lila bleibt der Raum, Türkis kommt
+   dort dazu, wo es um den Laden selbst geht (Leistungen, Studio, Galerie, Besuch). */
+.services,
+.studio,
+.gallery,
+.contact { isolation: isolate; }
+.services::before,
+.studio::before,
+.gallery::before,
+.contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.services::before { background: radial-gradient(48% 42% at 94% 82%, rgba(150, 228, 220, 0.34), transparent 70%); }
+.studio::before {
+  background:
+    radial-gradient(55% 55% at 12% 60%, rgba(150, 228, 220, 0.42), transparent 70%),
+    radial-gradient(35% 35% at 92% 18%, rgba(178, 160, 255, 0.22), transparent 70%);
+}
+.gallery::before { background: radial-gradient(42% 48% at 88% 38%, rgba(150, 228, 220, 0.3), transparent 70%); }
+.contact::before { background: radial-gradient(52% 48% at 8% 72%, rgba(150, 228, 220, 0.36), transparent 70%); }
+
+/* ==========================================================================
+   v3 · Blüten nach Plan, Bahar im Orchideenkranz
+   Ordnung: Die Sträuße wachsen immer vom Rand der Seite herein (links, rechts,
+   im Wechsel) und liegen hinter dem Glas, das sie weich bricht. Einzelne
+   Blütenblätter liegen dort, wo sie von einem Strauß gefallen sein könnten.
+   ========================================================================== */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: url("../img/blattschatten.webp") 28% -40px / max(1500px, 110%) auto no-repeat;
+  opacity: 0.7;
+  mix-blend-mode: multiply;
+}
+.petal {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 8px rgba(40, 30, 120, 0.25));
+}
+.hero__petal--1 { left: 46%; top: 79%; width: 34px; rotate: 28deg; }
+.hero__petal--2 { right: 5%; top: 16%; width: 24px; rotate: -18deg; filter: blur(1px) drop-shadow(0 6px 6px rgba(40, 30, 120, 0.2)); }
+@media (max-width: 899px) { .hero__petal { display: none; } }
+
+/* Leistungen: Sichel wächst links herein, hinter den Glaskarten */
+.services .container { position: relative; }
+.bento { position: relative; z-index: 1; }
+.services__sichel {
+  z-index: 0;
+  left: -300px;
+  top: 150px;
+  width: 420px;
+  rotate: 4deg;
+}
+@media (max-width: 1079px) { .services__sichel { left: -200px; width: 320px; } }
+@media (max-width: 639px) { .services__sichel { left: -120px; top: 420px; width: 230px; } }
+
+/* Über Bahar: rundes Porträt, der Kranz liegt darüber und rahmt es */
+.about__figure {
+  position: relative;
+  width: min(100%, 540px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+.about__portrait {
+  position: absolute;
+  inset: 21%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.28),
+    0 0 0 9px rgba(255, 255, 255, 0.85),
+    0 34px 60px -24px rgba(72, 46, 160, 0.5);
+}
+.about__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+}
+.about__kranz {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 18px rgba(40, 30, 120, 0.22));
+}
+@media (max-width: 600px) { .about__figure { width: min(100%, 380px); } }
+.about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 34px;
+}
+.about__facts li {
+  display: grid;
+  gap: 4px;
+  padding: 18px 16px 16px;
+  border-radius: 24px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+.about__facts strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.3rem;
+  line-height: 1;
+  background: linear-gradient(150deg, #8b72ff, #4f7fdc 52%, #1a8f8a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (max-width: 420px) {
+  .about__facts { gap: 8px; }
+  .about__facts li { padding: 14px 10px 12px; font-size: 0.74rem; border-radius: 18px; }
+  .about__facts strong { font-size: 1.9rem; }
+}
+
+/* Studio: türkise Ranke wächst links herein, die Farbe des Ladens */
+.studio__ranke {
+  z-index: 0;
+  left: -128px;
+  top: 4%;
+  height: 92%;
+  width: auto;
+  scale: -1 1;
+}
+@media (max-width: 899px) { .studio__ranke { display: none; } }
+
+/* Preise: der weite Zweig kommt von rechts und liegt hinter dem Glas */
+.prices__bloom {
+  top: clamp(-30px, -1vw, 0px);
+  right: -10%;
+  width: min(92%, 640px);
+  rotate: 2deg;
+  scale: -1 1;
+}
+@media (max-width: 560px) { .prices__bloom { right: -18%; width: 104%; } }
+
+.bridal__petal { left: 36%; bottom: 34px; width: 34px; rotate: -24deg; }
+@media (max-width: 979px) { .bridal__petal { left: auto; right: 34%; bottom: auto; top: 30px; } }
+
+/* Bahar: kein großes Loch vor dem Studio */
+.about { padding-bottom: clamp(56px, 7vw, 100px); }
+
+/* ==========================================================================
+   v4 · Hero: Schere in der Glasplatte, Blüten greifen herum
+   Alle Maße relativ zur Kompositionsbreite --S, damit die Anordnung aus der
+   Vorlage auf jeder Größe exakt gleich bleibt.
+   ========================================================================== */
+.hero { overflow: visible; z-index: 2; }
+.hero::after { display: none; }
+.comp {
+  --S: min(50vw, 82svh, 720px);
+  position: absolute;
+  z-index: 1;
+  right: max(0px, calc(50% - 700px));
+  bottom: calc(var(--S) * -0.13);
+  width: var(--S);
+  aspect-ratio: 1008 / 1031;
+  pointer-events: none;
+}
+.comp > * { position: absolute; max-width: none; height: auto; }
+.comp__kranz { inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 22px 26px rgba(30, 50, 140, 0.18)); }
+.comp__caustic {
+  left: 16%; right: 8%; top: 86%; height: 13%;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg at 50% 0%, rgba(255, 170, 220, 0.55), rgba(170, 200, 255, 0.6), rgba(150, 240, 220, 0.55), rgba(255, 236, 170, 0.5), rgba(255, 170, 220, 0.55));
+  filter: blur(18px);
+  opacity: 0.65;
+}
+/* Blüten hinter der Platte: durch das Glas nur als weiche Form sichtbar */
+.comp__hinten--1 { left: 56%; top: 25%; height: 56%; width: auto; rotate: 10deg; }
+.comp__hinten--2 { left: 27%; top: 49%; width: 24%; rotate: -12deg; }
+.comp__platte {
+  --bevel: calc(var(--S) * 0.021);
+  --frost: calc(var(--S) * 0.016);
+  left: 23.4%; top: 23.86%;
+  width: 53.2%; height: 55.8%;
+  border-radius: calc(var(--S) * 0.026);
+}
+.comp__schere {
+  left: 41%; top: 6%;
+  width: 29%;
+  rotate: -26deg;
+  filter: drop-shadow(0 26px 22px rgba(20, 24, 80, 0.32)) drop-shadow(0 4px 5px rgba(20, 24, 80, 0.22));
+}
+.comp__vorn { filter: drop-shadow(0 16px 16px rgba(20, 40, 130, 0.28)); }
+.comp__vorn--gelenk { left: 46%; top: 30%; width: 21%; rotate: 10deg; }
+.comp__vorn--kante { left: 13%; top: 64%; width: 19%; rotate: -16deg; }
+.comp__blatt--auf { left: 33%; top: 33%; width: 5.6%; rotate: -10deg; filter: drop-shadow(0 6px 6px rgba(20, 40, 130, 0.25)); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .comp__kranz, .comp__hinten { animation: comp-in 1.4s var(--ease-out) both; }
+  .comp__platte { animation: comp-in 1.2s var(--ease-out) 0.1s both; }
+  .comp__schere { animation: comp-schere 1.5s var(--ease-out) 0.25s both; }
+  .comp__vorn, .comp__blatt { animation: comp-in 1.3s var(--ease-out) 0.45s both; }
+}
+@keyframes comp-in { from { opacity: 0; translate: 0 18px; } }
+@keyframes comp-schere { from { opacity: 0; translate: 0 40px; } }
+
+@media (min-width: 900px) {
+  .hero__content { position: relative; z-index: 3; }
+  .hero__card > :not(.hero__title):not(.hero__meta) { max-width: 520px; }
+  .hero__title { max-width: 6.2em; }
+}
+@media (max-width: 1180px) and (min-width: 900px) {
+  .comp { --S: min(54vw, 640px); right: -4vw; }
+}
+@media (max-width: 899px) {
+  .comp {
+    --S: min(104vw, 470px);
+    right: auto; bottom: auto;
+    left: 50%; top: 64px;
+    translate: -50% 0;
+  }
+  .hero { padding-top: calc(64px + min(104vw, 470px) * 0.74); }
+  .hero__card { position: relative; z-index: 3; }
+}
+/* Hero-Platte: klar wie in der Vorlage, Blüten dahinter bleiben erkennbar */
+.comp__platte {
+  --face: linear-gradient(170deg, rgba(255, 255, 255, 0.36) 0%, rgba(250, 248, 255, 0.22) 60%, rgba(240, 252, 252, 0.28) 100%);
+  --frost: 8px;
+}
+.comp__platte::before { opacity: 0.95; }
+.comp__vorn--gelenk { left: 49%; top: 35%; width: 18%; rotate: 14deg; }
+.comp__vorn--gelenk { filter: saturate(1.2) brightness(1.14) drop-shadow(0 16px 16px rgba(20, 40, 130, 0.3)); }
+.comp__platte { --r: calc(var(--S) * 0.026); }
+@media (min-width: 1181px) { .comp { --S: min(52vw, 88svh, 780px); bottom: calc(var(--S) * -0.2); } }
+
+/* ---------- v4 · Blüten greifen um Glas ----------
+   Die Ecken stammen aus der Konzept-Komposition und haben dort, wo die Platte
+   lag, ein Loch. Dieses Loch liegt genau unter der Kartenecke, so wachsen die
+   Blüten scheinbar hinter dem Glas hervor. */
+.grip, .grip-vorn {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+.grip { z-index: 0; filter: drop-shadow(0 18px 22px rgba(30, 50, 140, 0.16)); }
+.grip-vorn { z-index: 2; filter: drop-shadow(0 16px 16px rgba(20, 40, 130, 0.28)); }
+.bridal__wrap { position: relative; }
+.bridal__wrap > .bridal__card { position: relative; z-index: 1; }
+.bridal__wrap { --g1: clamp(220px, 26vw, 360px); --g2: clamp(220px, 27vw, 380px); }
+.grip--oben {
+  width: var(--g1);
+  right: calc(var(--g1) * -0.472 + 22px);
+  top: calc(var(--g1) * -0.3616 + 22px);
+}
+.grip--unten {
+  width: var(--g2);
+  left: calc(var(--g2) * -0.406 + 22px);
+  bottom: calc(var(--g2) * -0.3727 + 22px);
+}
+.bridal__vorn { width: clamp(90px, 9vw, 130px); right: clamp(-40px, -2.4vw, -20px); bottom: clamp(-46px, -3vw, -26px); rotate: -14deg; }
+@media (max-width: 979px) {
+  .bridal__wrap { --g1: 200px; --g2: 210px; }
+  .bridal__vorn { width: 86px; right: -12px; bottom: -30px; }
+}
+/* Kontakt: helle Blüten greifen um die obere rechte Ecke der Kartenkachel */
+.contact__bloom { display: none; }
+.map-wrap { position: relative; min-width: 0; }
+.map-wrap > .map { position: relative; z-index: 1; height: 100%; }
+.grip--map { --g: clamp(170px, 18vw, 260px); width: var(--g); right: calc(var(--g) * -0.472 + 20px); top: calc(var(--g) * -0.3616 + 20px); }
+@media (min-width: 760px) { .map-wrap { grid-column: span 2; } }
+@media (min-width: 1120px) { .map-wrap { grid-column: auto; } }
+@media (max-width: 759px) { .grip--map { --g: 150px; right: calc(var(--g) * -0.472 + 14px); } }
+@media (max-width: 899px) {
+  .comp { --S: min(108vw, 480px); top: 58px; }
+  .hero { padding-top: calc(58px + min(108vw, 480px) * 0.8); }
+}

@@ -19,6 +19,7 @@ Statische Website ohne Buildschritt. Einfach alle Dateien auf den Webspace laden
 - Hauptfassung im Wurzelordner (alter Link bleibt unverändert)
 - `v2/`: überarbeitete Fassung mit mehr Türkis, ruhigerem Hero, neuer Blütenanordnung und einheitlichen Brautbildern. Eigene Kopie aller Seiten und Bilder, nicht indexiert (`noindex`). Gemeinsame Blöcke dort mit `node tools/sync-partials.mjs v2` abgleichen.
 - `v3/`: Glasoptik nach der „verre liquide“-Referenz (dicke Glaskante, Flüssig-Pillen in Lila und Türkis, Blattschatten), Orchideen aus den Referenzbildern (Kranz, Sichel, weiter Zweig, türkise Ranke, Blütenblätter), Bahar im Orchideenkranz. Abgleich mit `node tools/sync-partials.mjs v3`.
+- `v4/`: Glas exakt nach dem „Blue Orchid Concept“ (holografische, gekörnte Facettenkante, mattierte Fläche, Tropfen), Hero mit Schere in einer Glasplatte, um die Blüten greifen, Blütenecken um Braut- und Kartenkachel, edle Buttons in Orchideenblau. Abgleich mit `node tools/sync-partials.mjs v4`.
 
 ## Häufige Änderungen
 
