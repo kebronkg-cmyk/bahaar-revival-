@@ -1858,3 +1858,140 @@ a.card:hover .card__link svg { transform: translateX(5px); }
 @media (max-width: 979px) { .bridal__wrap { --k: 0.62; margin-top: 60px; } .bridal__card { padding-top: 56px; } }
 @media (max-width: 560px) { .bridal__wrap { --k: 0.46; } }
 @media (max-width: 1500px) and (min-width: 1241px) { .bridal__wrap { --k: 0.9; } }
+
+/* ==========================================================================
+   v4.3 · Lebendige Blüten
+   ========================================================================== */
+/* Wachsen: nur transform und opacity, damit es auf der Grafikkarte läuft.
+   Start: klein, eingedreht und ein Stück in Richtung Karte/Glas versetzt,
+   also scheinbar dahinter. Ende: volle Größe mit leichtem Nachfedern. */
+.comp__kranz, .comp__hinten, .comp__platte, .comp__vorn, .comp__blatt { animation: none; }
+.can-grow [data-grow] {
+  opacity: 0;
+  transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(var(--gs, 0.38)) rotate(var(--gr, -14deg));
+  transform-origin: var(--go, 50% 100%);
+  transition:
+    transform 1.35s cubic-bezier(0.2, 1.18, 0.32, 1) var(--gd, 0s),
+    opacity 0.55s ease-out var(--gd, 0s);
+  will-change: transform, opacity;
+}
+.can-grow [data-grow].is-grown { opacity: 1; transform: none; }
+.can-grow [data-grow].is-settled { will-change: auto; }
+/* danach ein ganz leichtes Wiegen, als läge Luft im Raum (nur am Rechner) */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .is-settled.comp__vorn, .is-settled.rahmen, .is-settled.studio__bluete {
+    animation: wiegen 7s ease-in-out infinite alternate;
+  }
+  .is-settled.rahmen--ul, .is-settled.studio__bluete--blau { animation-duration: 8.5s; animation-delay: -3s; }
+}
+@keyframes wiegen { from { rotate: var(--r0, 0deg); } to { rotate: calc(var(--r0, 0deg) + 2.2deg); } }
+
+/* ---------- Hero: größer, höher, weicher Übergang ---------- */
+.hero__stage {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+}
+.hero__aurora { background-color: transparent; }
+@media (min-width: 900px) {
+  .comp, .comp { --S: min(56vw, calc(100svh - 70px), 860px); top: 74px; bottom: auto; right: max(10px, calc(50% - 690px)); }
+}
+@media (min-width: 900px) and (max-width: 1180px) {
+  .comp { --S: min(58vw, 680px); right: 0; }
+}
+.comp__caustic { display: none; }
+
+/* ---------- Leistungen: Sichel hinter den Karten, mittig statt am Rand ---------- */
+.services__sichel {
+  left: 41%;
+  top: 112px;
+  width: clamp(240px, 24vw, 330px);
+  rotate: -10deg;
+}
+@media (max-width: 1079px) { .services__sichel { left: 46%; top: 150px; width: 260px; } }
+@media (max-width: 639px) { .services__sichel { left: auto; right: 10px; top: 300px; width: 170px; } }
+
+/* ---------- Studio: zwei ganze Blüten im freien Raum neben der Überschrift ---------- */
+.studio .section-head > div:first-child { position: relative; }
+.studio__bluete {
+  position: absolute;
+  z-index: 0;
+  height: auto;
+  pointer-events: none;
+  opacity: 0.9;
+  filter: saturate(0.95) drop-shadow(0 14px 16px rgba(20, 40, 130, 0.2));
+}
+.studio__bluete--tq { --r0: -12deg; right: -6%; top: 6px; width: clamp(96px, 9vw, 132px); rotate: -12deg; }
+.studio__bluete--blau { --r0: 16deg; right: -14%; top: 92px; width: clamp(70px, 6.4vw, 96px); rotate: 16deg; opacity: 0.82; filter: blur(0.6px) saturate(0.95) drop-shadow(0 12px 14px rgba(20, 40, 130, 0.18)); }
+.studio .section-head .h2 { position: relative; z-index: 1; }
+@media (max-width: 899px) {
+  .studio__bluete--tq { right: 2%; top: 30px; width: 88px; }
+  .studio__bluete--blau { right: 18%; top: 96px; width: 62px; }
+}
+
+/* ---------- Preise: Zweig nicht mehr am Bildschirmrand ---------- */
+.prices__bloom { right: -2%; width: min(84%, 580px); }
+@media (max-width: 560px) { .prices__bloom { right: 0; width: 92%; } }
+
+/* ---------- Brautkarte: Platz für den Rahmen, nichts am Bildschirmrand ---------- */
+.bridal__wrap { margin-inline: calc(150px * var(--k) - var(--gutter)); }
+@media (max-width: 979px) { .bridal__wrap { margin-inline: calc(110px * var(--k)); } }
+@media (max-width: 560px) { .bridal__wrap { --k: 0.4; margin-inline: 30px; } }
+
+/* ---------- Kontakt: Blütenecke ganz sichtbar ---------- */
+.grip--map { --g: clamp(160px, 15vw, 220px); right: calc(var(--g) * -0.472 + 46px); top: calc(var(--g) * -0.3616 + 26px); }
+@media (max-width: 759px) { .grip--map { --g: 130px; right: calc(var(--g) * -0.472 + 34px); } }
+.comp__vorn--ecke { --r0: 18deg; }
+.comp__vorn--kante { --r0: -16deg; }
+.can-grow .studio__bluete--tq.is-grown { opacity: 0.9; }
+.can-grow .studio__bluete--blau.is-grown { opacity: 0.8; }
+@media (max-width: 899px) {
+  .comp { --S: min(96vw, 470px); top: 62px; }
+  .hero { padding-top: calc(62px + min(96vw, 470px) * 0.86); }
+}
+/* Korrekturen: nie über Text */
+@media (min-width: 1181px) {
+  .comp { --S: min(50vw, calc(100svh - 80px), 800px); right: max(16px, calc(50% - 700px)); }
+}
+/* Leistungen: Sichel steht in der Lücke zwischen Überschrift und Einleitung */
+.services .section-head { position: relative; }
+.services__sichel {
+  left: 50%;
+  top: -6px;
+  width: clamp(120px, 10.5vw, 152px);
+  margin-left: -64px;
+  rotate: -6deg;
+}
+@media (max-width: 899px) { .services__sichel { left: auto; right: 4px; margin-left: 0; top: -24px; width: 92px; } }
+/* Preise: Zweig nur hinter der oberen rechten Hälfte der Preisliste */
+.prices__bloom { right: -34px; left: auto; top: 6px; width: min(64%, 430px); }
+@media (max-width: 999px) { .prices__bloom { right: -10px; width: min(62%, 380px); } }
+
+/* Leistungen: ein Zweig wächst hinter der oberen Kante der Karten hervor, unter dem Text */
+.services__sichel { display: none; }
+.services__stage { position: relative; }
+.services__arm {
+  z-index: 0;
+  right: 6%;
+  top: -132px;
+  width: clamp(260px, 26vw, 360px);
+  rotate: -4deg;
+}
+.services__stage .bento { position: relative; z-index: 1; }
+@media (max-width: 899px) { .services__arm { right: 2%; top: -96px; width: 230px; } }
+/* Zweig sitzt tiefer: wächst aus der Fuge zwischen den Karten, unterhalb der Einleitung */
+.services__arm { top: -84px; right: 20%; width: clamp(220px, 21vw, 300px); }
+.services .section-head { margin-bottom: clamp(70px, 7vw, 100px); }
+@media (max-width: 899px) { .services__arm { top: -64px; right: 4%; width: 190px; } .services .section-head { margin-bottom: 70px; } }
+/* Studio auf dem Handy: Blüten neben dem Eyebrow, über dem Titel ist Platz */
+@media (max-width: 899px) {
+  .studio .section-head > div:first-child { padding-top: 64px; }
+  .studio__bluete--tq { right: 6%; top: -10px; width: 82px; }
+  .studio__bluete--blau { right: 28%; top: 14px; width: 56px; }
+}
+/* Wachsen etwas ruhiger, Deckkraft folgt dem Wachstum statt vorauszulaufen */
+.can-grow [data-grow] {
+  transition:
+    transform 1.7s cubic-bezier(0.18, 1.12, 0.3, 1) var(--gd, 0s),
+    opacity 0.9s cubic-bezier(0.3, 0, 0.3, 1) var(--gd, 0s);
+}
+@media (min-width: 1181px) { .comp { --S: min(55vw, calc(100svh - 60px), 860px); top: 64px; right: max(8px, calc(50% - 712px)); } }

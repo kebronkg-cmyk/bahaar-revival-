@@ -24,7 +24,7 @@
   <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/home.css">
-  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script>document.documentElement.classList.replace('no-js', 'js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('can-grow');</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -120,8 +120,8 @@
            in der die Schere steht. Hinten der Kranz, vorne einzelne Blüten und Blätter. -->
       <div class="comp" aria-hidden="true">
         <div class="comp__caustic"></div>
-        <img class="comp__kranz" src="assets/img/orchid/konzept-kranz.webp" width="1008" height="1031" alt="" fetchpriority="high">
-        <img class="comp__hinten comp__hinten--1" src="assets/img/orchid/tuerkis-ranke.webp" width="192" height="802" alt="">
+        <img class="comp__kranz" data-grow style="--go:50% 52%;--gr:-10deg;--gs:.72;--gd:.05s" src="assets/img/orchid/konzept-kranz.webp" width="1008" height="1031" alt="" fetchpriority="high">
+        <img class="comp__hinten comp__hinten--1" data-grow style="--go:30% 100%;--gx:-30px;--gr:-16deg;--gd:.2s" src="assets/img/orchid/tuerkis-ranke.webp" width="192" height="802" alt="">
         <img class="comp__hinten comp__hinten--2" src="assets/img/orchid/blossom-480.webp" width="480" height="437" alt="">
         <div class="comp__platte glass glass--lg">
           <img class="comp__laden" src="assets/img/studio/laden-front-rahmen.webp" width="685" height="548" alt="" fetchpriority="high">
@@ -132,9 +132,9 @@
           <span class="drop" style="--s:6px;left:52%;top:86%"></span>
           <span class="drop" style="--s:11px;left:88%;top:68%"></span>
         </div>
-        <img class="comp__vorn comp__vorn--ecke" src="assets/img/orchid/blossom-480.webp" width="480" height="437" alt="">
-        <img class="comp__vorn comp__vorn--kante" src="assets/img/orchid/tq-bluete.webp" width="480" height="437" alt="">
-        <img class="comp__blatt comp__blatt--auf" src="assets/img/orchid/konzept-blatt.webp" width="59" height="58" alt="">
+        <img class="comp__vorn comp__vorn--ecke" data-grow style="--go:20% 20%;--gx:-24px;--gy:-24px;--gr:-30deg;--gd:.55s" src="assets/img/orchid/blossom-480.webp" width="480" height="437" alt="">
+        <img class="comp__vorn comp__vorn--kante" data-grow style="--go:80% 30%;--gx:26px;--gy:-20px;--gr:24deg;--gd:.7s" src="assets/img/orchid/tq-bluete.webp" width="480" height="437" alt="">
+        <img class="comp__blatt comp__blatt--auf" data-grow style="--go:50% 50%;--gy:-40px;--gr:-60deg;--gd:1s" src="assets/img/orchid/konzept-blatt.webp" width="59" height="58" alt="">
       </div>
 
       <div class="container hero__content">
@@ -190,8 +190,8 @@
             Jede Frisur passen wir an deine Wünsche, deinen Haartyp und deine Haarstruktur an. Eine ehrliche, persönliche Beratung ist bei uns immer dabei.
           </p>
         </header>
-
-        <img class="bloom services__sichel" src="assets/img/orchid/sichel.webp" width="810" height="1077" alt="" loading="lazy">
+        <div class="services__stage">
+        <img class="bloom services__arm" data-grow style="--go:12% 100%;--gy:70px;--gr:8deg;--gs:.5" src="assets/img/orchid/zweig-arm.webp" width="744" height="300" alt="" loading="lazy">
         <div class="bento">
           <a class="card card--feature glass glass--lg" href="preise.html#farbe" data-reveal data-tilt>
             <picture class="card__photo">
@@ -269,7 +269,7 @@
           </a>
 
           <div class="card card--kosmetik glass glass--tint" data-reveal style="--d:.15s">
-            <img class="card__kosmetik-bloom" src="assets/img/orchid/blossom-tq-480.webp" width="480" height="437" alt="" loading="lazy">
+            <img class="card__kosmetik-bloom" data-grow style="--go:80% 100%;--gx:30px;--gy:30px;--gr:20deg;--gd:.25s" src="assets/img/orchid/blossom-tq-480.webp" width="480" height="437" alt="" loading="lazy">
             <span class="card__top">
               <span class="card__icon"><svg aria-hidden="true"><use href="assets/img/icons.svg#i-flower"/></svg></span>
               <span class="chip chip--new">Gleich nebenan</span>
@@ -277,6 +277,7 @@
             <span class="h3 card__title">BaHaar’s <em>Kosmetikstudio</em></span>
             <span class="card__text">Gesichtsbehandlung · Waxing · Maniküre · Pediküre · Make-up · Wimpern. <a class="inline-link" href="tel:+49896923644">Ruf uns an</a>, wir beraten dich gern.</span>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -288,7 +289,7 @@
           <div class="about__portrait">
             <img src="assets/img/studio/bahar-624.webp" width="624" height="1024" alt="Friseurmeisterin Bahar in ihrem Studio in Giesing" loading="lazy">
           </div>
-          <img class="about__kranz" src="assets/img/orchid/kranz.webp" width="703" height="692" alt="" loading="lazy">
+          <img class="about__kranz" data-grow style="--go:50% 50%;--gs:.82;--gr:-38deg" src="assets/img/orchid/kranz.webp" width="703" height="692" alt="" loading="lazy">
         </figure>
 
         <div class="about__text">
@@ -316,6 +317,8 @@
         <header class="section-head section-head--split">
           <div>
             <p class="eyebrow" data-reveal>Unser Studio</p>
+            <img class="studio__bluete studio__bluete--tq" data-grow style="--go:50% 90%;--gy:24px;--gr:-24deg" src="assets/img/orchid/tq-bluete.webp" width="480" height="437" alt="" loading="lazy">
+            <img class="studio__bluete studio__bluete--blau" data-grow style="--go:50% 90%;--gy:24px;--gr:22deg;--gd:.18s" src="assets/img/orchid/blossom-480.webp" width="480" height="437" alt="" loading="lazy">
             <h2 class="h2" id="studio-title" data-split>Komm rein und <em>fühl dich wohl</em>.</h2>
           </div>
           <div class="studio__aside" data-reveal style="--d:.2s">
@@ -327,7 +330,6 @@
         </header>
 
         <div class="studio__grid">
-          <img class="bloom studio__ranke" src="assets/img/orchid/tuerkis-ranke.webp" width="192" height="802" alt="" loading="lazy">
           <figure class="studio__shot studio__shot--main glass glass--lg" data-reveal="scale" data-studio-shot>
             <div class="studio__frame">
               <img src="assets/img/studio/laden-raum.webp" width="1170" height="548" alt="Blick in den Salon mit dem Pflegeregal und den Frisierplätzen" loading="lazy">
@@ -372,8 +374,8 @@
         </div>
 
         <div class="prices__stage" data-reveal="scale" style="--d:.1s">
-          <img class="prices__bloom" src="assets/img/orchid/zweig-sanft.webp" width="704" height="646" alt="" loading="lazy">
-          <img class="prices__schere" src="assets/img/hero/schere-420.webp" width="420" height="727" alt="" loading="lazy">
+          <img class="prices__bloom" data-grow style="--go:15% 100%;--gx:-40px;--gy:40px;--gr:14deg" src="assets/img/orchid/zweig-sanft.webp" width="704" height="646" alt="" loading="lazy">
+          <img class="prices__schere" data-grow style="--go:50% 50%;--gx:-30px;--gr:-40deg;--gs:.6;--gd:.35s" src="assets/img/hero/schere-420.webp" width="420" height="727" alt="" loading="lazy">
           <div class="price-panel glass glass--lg" data-price-panel>
             <div class="price-panel__head">
               <div class="segmented" role="tablist" aria-label="Kategorie wählen" data-segmented>
@@ -440,10 +442,10 @@
       <div class="container">
         <div class="bridal__wrap">
         <!-- Blütenrahmen nach Vorlage: die Blüten legen sich über die Glaskante; Teile, die im Original hinter dem Glas liegen, enden genau an der Kante -->
-        <img class="rahmen rahmen--ol" src="assets/img/orchid/rahmen-ol.webp" width="200" height="190" alt="" loading="lazy">
-        <img class="rahmen rahmen--ul" src="assets/img/orchid/rahmen-ul.webp" width="380" height="463" alt="" loading="lazy">
-        <img class="rahmen rahmen--or" src="assets/img/orchid/rahmen-or.webp" width="425" height="380" alt="" loading="lazy">
-        <img class="rahmen rahmen--ur" src="assets/img/orchid/rahmen-ur.webp" width="175" height="320" alt="" loading="lazy">
+        <img class="rahmen rahmen--ol" data-grow style="--go:56% 50%;--gx:30px;--gr:12deg;--gd:.25s" src="assets/img/orchid/rahmen-ol.webp" width="200" height="190" alt="" loading="lazy">
+        <img class="rahmen rahmen--ul" data-grow style="--go:30% 14%;--gx:30px;--gy:-30px;--gr:-14deg;--gd:.1s" src="assets/img/orchid/rahmen-ul.webp" width="380" height="463" alt="" loading="lazy">
+        <img class="rahmen rahmen--or" data-grow style="--go:63% 20%;--gx:-30px;--gy:30px;--gr:12deg" src="assets/img/orchid/rahmen-or.webp" width="425" height="380" alt="" loading="lazy">
+        <img class="rahmen rahmen--ur" data-grow style="--go:9% 60%;--gx:-30px;--gr:-14deg;--gd:.35s" src="assets/img/orchid/rahmen-ur.webp" width="175" height="320" alt="" loading="lazy">
         <div class="bridal__card glass glass--tint glass--lg">
           <div class="bridal__text">
             <p class="eyebrow" data-reveal>Brautstyling</p>
@@ -601,7 +603,7 @@
           </div>
 
           <div class="map-wrap">
-          <img class="grip grip--map" src="assets/img/orchid/ecke-oben.webp" width="415" height="521" alt="" loading="lazy">
+          <img class="grip grip--map" data-grow style="--go:53% 29%;--gx:-30px;--gy:30px;--gr:14deg" src="assets/img/orchid/ecke-oben.webp" width="415" height="521" alt="" loading="lazy">
           <div class="map glass glass--lg" data-reveal style="--d:.2s" data-map>
             <div class="map__placeholder">
               <img class="map__bg" src="assets/img/studio/salon-733.webp" width="733" height="549" alt="" loading="lazy">

@@ -242,6 +242,36 @@
   }
 
   /* ------------------------------------------------------------------
+     Blüten wachsen hinter Glas und Karten hervor
+     Jede Blüte startet klein und eingedreht an ihrem Stielansatz (--go) und
+     entfaltet sich, sobald ihr Abschnitt ins Bild kommt. Im Hero sofort.
+     ------------------------------------------------------------------ */
+  const growEls = [...document.querySelectorAll('[data-grow]')];
+  if (growEls.length) {
+    const grow = (el) => {
+      el.classList.add('is-grown');
+      // nach dem Wachsen keine Ebene mehr reservieren
+      setTimeout(() => el.classList.add('is-settled'), 2200);
+    };
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      growEls.forEach((el) => el.classList.add('is-grown', 'is-settled'));
+    } else {
+      doc.classList.add('can-grow');
+      const gio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          grow(e.target);
+          gio.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+      growEls.forEach((el) => {
+        if (el.closest('[data-hero]')) requestAnimationFrame(() => requestAnimationFrame(() => grow(el)));
+        else gio.observe(el);
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Glas-Glanzlicht folgt dem Zeiger + sanftes Kippen
      ------------------------------------------------------------------ */
   if (finePointer && !reduceMotion) {
