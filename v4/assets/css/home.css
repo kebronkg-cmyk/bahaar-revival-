@@ -1835,3 +1835,26 @@ a.card:hover .card__link svg { transform: translateX(5px); }
 }
 @media (max-width: 899px) { .hero { padding-top: calc(58px + min(108vw, 480px) * 0.86); } }
 @media (max-width: 560px) { .prices__schere { left: 42px; top: 40px; } }
+
+/* ---------- Brautkarte: Blütenrahmen nach Vorlage ----------
+   Vier Stücke aus einer Komposition. Jedes ist so gesetzt, dass die Linie, an der
+   im Original die Glasplatte lag, genau auf der Kartenkante liegt. --k skaliert. */
+.ranke, .grip--oben, .grip--unten, .bridal__vorn { display: none; }
+.bridal__wrap { --k: 1; margin-top: 0; }
+.bridal__card { padding-top: clamp(28px, 5vw, 64px); }
+.rahmen {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 16px rgba(20, 40, 130, 0.22));
+}
+.rahmen--ol { width: calc(200px * var(--k)); left: calc(-112px * var(--k)); top: calc(70px * var(--k)); }
+.rahmen--ul { width: calc(380px * var(--k)); left: calc(-112px * var(--k)); bottom: calc(-47px * var(--k)); }
+.rahmen--or { width: calc(425px * var(--k)); right: calc(-159px * var(--k)); top: calc(-78px * var(--k)); }
+.rahmen--ur { width: calc(175px * var(--k)); right: calc(-159px * var(--k)); bottom: calc(60px * var(--k)); }
+@media (max-width: 1240px) { .bridal__wrap { --k: 0.82; } }
+@media (max-width: 979px) { .bridal__wrap { --k: 0.62; margin-top: 60px; } .bridal__card { padding-top: 56px; } }
+@media (max-width: 560px) { .bridal__wrap { --k: 0.46; } }
+@media (max-width: 1500px) and (min-width: 1241px) { .bridal__wrap { --k: 0.9; } }
